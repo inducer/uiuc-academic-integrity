@@ -1,0 +1,42 @@
+grist_root_url: "https://scicomp-grist.cs.illinois.edu"
+grist_doc_id: s7VzXiAHXbwgivucYprb6z
+
+parameters:
+- case_id
+
+query: |
+    select *
+    from Cases
+    where CaseID = {{case_id}}
+
+to:
+- 
+    name: Heather Zike
+    email: hlzike@illinois.edu
+
+cc:
+- 
+    name: Andreas Kloeckner
+    email: andreask@illinois.edu
+
+subject: |
+
+    Student committee members for FAIR {{ CaseID }} hearing
+
+body: |
+
+    Hi Heather,
+
+    Could you please find student committee members for the hearing for FAIR{{ CaseID }}?
+
+    The hearing is currently scheduled for {{ Hearing_start | format_timestamp("%B %d %I:%M %p") }}.
+
+    Thank you for your help!
+    Andreas
+
+update:
+    table: Cases
+    fields:
+        Students_requested: |
+            from time import time
+            time()

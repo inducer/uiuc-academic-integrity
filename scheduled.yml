@@ -1,0 +1,117 @@
+grist_root_url: "https://scicomp-grist.cs.illinois.edu"
+grist_doc_id: s7VzXiAHXbwgivucYprb6z
+
+parameters:
+- case_id
+
+query: |
+    select *
+    from Cases
+    where CaseID = {{case_id}}
+
+to:
+-
+    email: "{{ Committee_emails }}"
+    semicolon_separated: true
+
+cc:
+- 
+    name: Andreas Kloeckner
+    email: andreask@illinois.edu
+- 
+    name: Heather Zike
+    email: hlzike@illinois.edu
+
+subject: |
+
+    {% if Schedule_emails_sent > 0 %}
+        [Update #{{ Schedule_emails_sent}}]
+    {% endif %}
+    Appeal Hearing for FAIR{{ CaseID }}
+
+body: |
+
+    All,
+
+    Thank you very much for agreeing to participate in the appeal hearing
+    for FAIR case {{ CaseID }}. The hearing will take place at
+
+    {{ Hearing_start | format_timestamp("%B %d %I:%M %p") }}
+
+    at this Zoom meeting link:
+
+    {{ Hearing_Location }}
+
+    All faculty committee members are alternative hosts for this meeting.
+
+    {% if Notes_for_schedule_email -%}
+    IMPORTANT:
+    ---------------------------------------------------------------
+    {{ Notes_for_schedule_email }}
+    ---------------------------------------------------------------
+
+    {% endif -%}
+
+    Before the hearing, please take a moment to review the details of the
+    case, via the FAIR system:
+
+    {{ URL }}
+
+    You should all have access; if you do not, please let me know.
+
+    You may see your role in the hearing from the following list:
+
+    {{ Role_list }}
+
+    If you are listed as a backup member, please keep a close eye on your
+    email around the hearing time (+15 minutes) and join the hearing if
+    asked to do so by the chair. A (non-voting) chair, two (voting) faculty
+    committee members, and a (voting) student member are required to be in
+    attendance in order for the hearing to proceed.
+
+    The procedure for the hearing is outlined in the student code, in §1‑405f:
+
+    https://studentcode.illinois.edu/article1/part4/1-405/
+
+    Please take a brief look beforehand so you know what to expect. The
+    chair will guide the participants through the meeting following this
+    procedure.
+
+    The appellant and the instructor *may* attend the meeting, but this is
+    not required. They are each allowed a brief opening statement at the
+    beginning of the hearing. If not attending, they may submit the opening
+    statement to the chair by email, who will enter it as case documentation
+    into the FAIR system and read the statement at the beginning of the
+    hearing. The open part of the hearing is next, during which committee
+    members may ask questions (through the chair) of the instructor and the
+    appellant. After this, appellant and instructor are dismissed and the
+    committee deliberates in closed session.
+
+    The goal of the deliberation is to establish, via simple majority vote:
+
+    - whether the appellant had grounds for appeal (one of four possible
+      grounds, see §1‑405c)
+    - whether to uphold or change the finding (if the finding is being appealed)
+    - whether to uphold or change the sanction (if the sanction is being appealed)
+
+    After the hearing completes, the chair provides a written report, about
+    a paragraph in length, via email to me, within three business days of
+    the hearing. The report must specify the committee's response to the
+    three questions above (including a rationale), who attended the meeting,
+    what information was being gathered and considered, whether the votes
+    were unanimous, and it must justify, based on the information
+    considered, the decision made by the committee.
+
+    If you have any questions, please do not hesitate to reach out.
+
+    Andreas
+    Chair, Academic Appeals Committee
+
+update:
+    table: Cases
+    fields:
+        Schedule_emails_sent: |
+            Schedule_emails_sent + 1
+        Last_schedule_email: |
+            from time import time
+            time()

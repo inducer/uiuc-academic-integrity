@@ -1,0 +1,58 @@
+grist_root_url: "https://scicomp-grist.cs.illinois.edu"
+grist_doc_id: mL2Fywj7vnmVDVbs2FuKFf
+
+query: |
+    select *
+    from Recipients
+    where Enabled
+
+to:
+- 
+    name: '{{ Full_name }}'
+    email: '{{ Email }}'
+
+cc:
+- 
+    name: Andreas Kloeckner
+    email: andreask@illinois.edu
+
+subject: |
+
+    [Course Ad, please disseminate] Fast Algorithms & Integral Equations
+
+body: |
+
+    Dear {{ First_name }},
+
+    This spring I will be offering a course "Fast Algorithms and Integral
+    Equation Methods" that I thought might be relevant to some members
+    of your research group as well as computationally inclined graduate
+    students in {{ Department }}.
+
+    It would be fantastic if you could pass this course ad along to any
+    students who you think might be interested.
+
+    Web: https://bit.ly/fastalg-s24
+    (outline/notes/slides are available)
+    Tue/Thu 11:00-12:15, 1302 Siebel
+
+    Split roughly in two parts, the course explores numerical methods and
+    algorithms for the solution of boundary value problems for elliptic PDEs
+    having optimal or near-optimal complexity.  Beginning from low-rank
+    properties in numerical linear algebra, the course introduces classical
+    fast algorithms such as Ewald summation, Barnes-Hut, Fast Multipole and the
+    butterfly method, as well as direct solvers for matrices of singular-kernel
+    type, highlighting the intimate relationship between smoothness of
+    functions and numerical rank. This set of tools is then brought to bear in
+    the computational context of integral equations, which are introduced
+    rigorously, including the necessary foundations in functional analysis. In
+    discussing high-order unstructured discretizations in 2D and 3D and
+    associated quadrature methods, the course closes by giving an overview of
+    practical, large-scale methods for the numerical solution of elliptic PDE
+    boundary value problems.
+
+    A practical note: I will be on travel on Thu Jan 18, so the second class
+    period of the semester will be canceled.
+
+    Thanks!
+    Andreas
