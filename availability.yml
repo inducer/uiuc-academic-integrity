@@ -45,7 +45,7 @@ body: |
     A number of appeals cases need to be heard in the near future. 
     {%- else -%}
     One or more appeals cases involving you need to be heard in the near future.
-    {% endif -%}
+    {%- endif %}
     To allow these hearings to proceed, please click the following link in
     order to provide your availability:
 
