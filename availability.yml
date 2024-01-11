@@ -4,6 +4,9 @@ grist_doc_id: s7VzXiAHXbwgivucYprb6z
 # All text is interpreted as a Jinja template, with row data available.
 # https://jinja.palletsprojects.com/en/3.0.x/templates/
 
+parameters:
+- request_group
+
 query: |
     select *
     from Availability_requests
@@ -12,6 +15,7 @@ query: |
     and (
         (Response_deadline is not null and Response_deadline < unixepoch('now'))
         or Last_nag is null)
+    and Request_group == {{ request_group }}
 
 to:
 -
