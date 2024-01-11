@@ -29,6 +29,16 @@ body: |
 
     Could you please find student committee members for the hearing for FAIR{{ CaseID }}?
 
+    The appellants for this hearing are: {{ Appellants }}
+
+    {% if Notes -%}
+    Some notes about this appeal:
+    ---------------------------------------------------------------
+    {{ Notes }}
+    ---------------------------------------------------------------
+
+    {% endif -%}
+
     The hearing is currently scheduled for {{ Hearing_start | format_timestamp("%B %d %I:%M %p") }}.
 
     Thank you for your help!
