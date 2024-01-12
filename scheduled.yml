@@ -27,14 +27,14 @@ subject: |
     {% if Schedule_emails_sent > 0 %}
         [Update #{{ Schedule_emails_sent}}]
     {% endif %}
-    Appeal Hearing for FAIR{{ CaseID }}
+    Appeal Hearing for FAIR{{ CaseID }}CS
 
 body: |
 
     All,
 
-    Thank you very much for agreeing to participate in the appeal hearing
-    for FAIR case {{ CaseID }}. The hearing will take place at
+    Thank you very much for agreeing to participate in the CS academic appeal
+    hearing for FAIR case {{ CaseID }}. The hearing will take place at
 
     {{ Hearing_start | format_timestamp("%B %d %I:%M %p") }}
 
@@ -105,7 +105,7 @@ body: |
     If you have any questions, please do not hesitate to reach out.
 
     Andreas
-    Chair, Academic Appeals Committee
+    Chair, CS Academic Appeals Committee
 
 update:
     table: Cases
