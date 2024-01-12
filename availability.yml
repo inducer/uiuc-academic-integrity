@@ -86,7 +86,7 @@ update:
                 datetime.datetime.combine(
                     datetime.date.today(),
                     deadline.time()),
-                2)
+                1)
 
             if deadline < min_deadline:
                 deadline = min_deadline
