@@ -110,11 +110,13 @@ body: |
     Andreas
     Chair, CS Academic Appeals Committee
 
-update:
-    table: Cases
+insert:
+-
+    table: Case_events
     fields:
-        Schedule_emails_sent: |
-            Schedule_emails_sent + 1
-        Last_schedule_email: |
+        Case: id
+        Timestamp: | 
             from time import time
             time()
+        Event: |
+            "Schedule email sent"
