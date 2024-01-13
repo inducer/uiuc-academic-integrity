@@ -29,7 +29,7 @@ body: |
 
     FAIR{{ CaseID }} has completed the appeals process.
     The hearing was held {{ Hearing_start | format_timestamp("%B %d %I:%M %p") }}.
-    Appellant(s) for this hearing: {{ Appellants }}
+    Appellant(s) for this hearing: {{ Appellants }}.
     A committee report is available that I think passes muster.
 
     Please take a look at the case at
