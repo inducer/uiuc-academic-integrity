@@ -44,9 +44,13 @@ body: |
     Thank you for your help!
     Andreas
 
-update:
-    table: Cases
+insert:
+-
+    table: Case_events
     fields:
-        Students_requested: |
+        Case: id
+        Timestamp: | 
             from time import time
             time()
+        Event: |
+            "Students requested"
