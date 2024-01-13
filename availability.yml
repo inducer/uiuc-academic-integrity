@@ -49,7 +49,7 @@ body: |
     To allow these hearings to proceed, please click the following link in
     order to provide your availability:
 
-    https://scicomp-apps.cs.illinois.edu/availability/{{ Key }}
+    {{ Availability_URL }}
 
     {% if Nag_count %}
     To avoid making my job harder than it already is:
