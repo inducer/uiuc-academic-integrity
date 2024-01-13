@@ -1,0 +1,52 @@
+grist_root_url: "https://scicomp-grist.cs.illinois.edu"
+grist_doc_id: s7VzXiAHXbwgivucYprb6z
+
+parameters:
+- case_id
+
+query: |
+    select *
+    from Cases
+    where CaseID = {{case_id}}
+
+to:
+- 
+    name: Elsa Gunter
+    email: egunter@illinois.edu
+
+cc:
+- 
+    name: Andreas Kloeckner
+    email: andreask@illinois.edu
+
+subject: |
+
+    FAIR{{ CaseID }} ready for closeout
+
+body: |
+
+    Dear Elsa,
+
+    FAIR{{ CaseID }} has completed the appeals process.
+    The hearing was held {{ Hearing_start | format_timestamp("%B %d %I:%M %p") }}.
+    Appellant(s) for this hearing: {{ Appellants }}
+    A committee report is available that I think passes muster.
+
+    Please take a look at the case at
+    {{ URL }}
+    If you think things look good, please send the notification to the student
+    and close the case. Otherwise, please let me know.
+
+    Thank you!
+    Andreas
+
+insert:
+-
+    table: Case_events
+    fields:
+        Case: id
+        Timestamp: | 
+            from time import time
+            time()
+        Event: |
+            "Handed off to EO"
