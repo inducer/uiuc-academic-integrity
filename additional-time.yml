@@ -1,0 +1,67 @@
+grist_root_url: "https://scicomp-grist.cs.illinois.edu"
+grist_doc_id: s7VzXiAHXbwgivucYprb6z
+
+parameters:
+- request_id
+
+query: |
+    select *
+    from Availability_requests
+    inner join Persons on Person = Persons.id
+    where Availability_requests.id = {{ request_id }}
+
+to:
+- 
+    name: "{{ Full_name }}"
+    email: "{{ Email }}"
+
+cc:
+- 
+    name: Andreas Kloeckner
+    email: andreask@illinois.edu
+
+subject: |
+
+    [TODO] Additional availability needed for Appeal Hearing
+
+body: |
+
+    Dear {{ First_name }},
+
+    When attempting to schedule an appeal hearing with your involvement,
+    I encountered a situation where no possible times work due to incompatible
+    availability.
+
+    I am writing to request that you revise your response to the availability
+    poll, providing additional times if at all possible. I have reopened the poll
+    for you, you can find it at:
+
+    {{ Availability_URL }}
+
+    Please provide your response by {{ updated_Response_deadline | format_timestamp("%B %d %I:%M %p") }}.
+
+    Thank you!
+    Andreas
+    Chair, CS Academic Appeals Committee
+
+update:
+    table: Availability_requests
+    fields:
+        Responded: None
+        Response_deadline: |
+
+            import date_utils as du
+            import datetime
+
+            deadline = datetime.datetime.fromtimestamp(Response_deadline)
+
+            min_deadline = du.datetime_by_adding_business_days(
+                datetime.datetime.combine(
+                    datetime.date.today(),
+                    deadline.time()),
+                1)
+
+            if deadline < min_deadline:
+                deadline = min_deadline
+
+            deadline.timestamp()
