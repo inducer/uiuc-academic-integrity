@@ -21,7 +21,11 @@ cc:
 
 subject: |
 
+    {% if Number_of_EO_rejections %}
+    FAIR{{ CaseID }} report update {{ Number_of_EO_rejections }} available, ready for closeout
+    {% else %}
     FAIR{{ CaseID }} ready for closeout
+    {% endif %}
 
 body: |
 
@@ -30,7 +34,14 @@ body: |
     FAIR{{ CaseID }} has completed the appeals process.
     The hearing was held {{ Hearing_start | format_timestamp("%B %d %I:%M %p") }}.
     Appellant(s) for this hearing: {{ Appellants }}.
+
+    {% if Number_of_EO_rejections -%}
+    A revised committee report is available. Your feedback has been
+    incorporated, and I will watch for reports with similar issues in the
+    future.
+    {%- else -%}
     A committee report is available that I think passes muster.
+    {%- endif %}
 
     Please take a look at the case at
     {{ URL }}
