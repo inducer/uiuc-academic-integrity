@@ -33,6 +33,9 @@ body: |
     Thank you for chairing the appeal hearing for FAIR {{ CaseID }}.
     The hearing took place {{ Hearing_start | format_timestamp("%B %d %I:%M %p") }}.
 
+    The participants of the hearing were
+    {{ Role_list }}
+
     The details of the case may be found at
     {{ URL }}
 
