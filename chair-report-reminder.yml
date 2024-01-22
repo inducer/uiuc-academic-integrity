@@ -1,0 +1,72 @@
+grist_root_url: "https://scicomp-grist.cs.illinois.edu"
+grist_doc_id: s7VzXiAHXbwgivucYprb6z
+
+parameters:
+- case_id
+
+query: |
+    select *
+    from Cases
+    inner join Case_participants on Case_participants."Case" = Cases.id
+    inner join Persons on Persons.id = Case_participants.Person
+    where CaseID = {{case_id}}
+    and Case_participants.Role = 'Chair'
+
+to:
+- 
+    name: "{{ Full_name}}"
+    email: "{{ Email }}"
+
+cc:
+- 
+    name: Andreas Kloeckner
+    email: andreask@illinois.edu
+
+subject: |
+
+    [OVERDUE] Committee report for FAIR{{ CaseID }}
+
+body: |
+
+    {{ First_name }},
+
+    Thank you for chairing the appeal hearing for FAIR {{ CaseID }}.
+    The hearing took place {{ Hearing_start | format_timestamp("%B %d %I:%M %p") }}.
+
+    The details of the case may be found at
+    {{ URL }}
+
+    By the student code, the consensus committee report is due
+    within three days of the appeal hearing.
+
+    Please work with your commitee right away to complete the report and share
+    it with me for review. The report should address the following questions:
+
+    - whether the appellant had grounds for appeal (exclusively one of four possible grounds, see §1‑405c)
+    - whether to uphold or change the finding (if the finding is being appealed)
+        - If changed, state the new finding.
+    - whether to uphold or change the sanction (if the sanction is being appealed)
+        - If changed (i.e. reduced), state the new sanction.
+
+    In addition, it should state:
+
+    - who attended the hearing,
+    - what information was being gathered and considered,
+    - whether the votes were unanimous, and
+    - it must justify, based on the information considered, the decision made by the committ
+
+    Thank you!
+
+    Andreas
+    Chair, CS Academic Appeals
+
+insert:
+-
+    table: Case_events
+    fields:
+        Case: id
+        Timestamp: | 
+            from time import time
+            time()
+        Event: |
+            "Report requested"
