@@ -95,12 +95,14 @@ body: |
     - whether the appellant had grounds for appeal (one of four possible
       grounds, see §1‑405c)
     - whether to uphold or change the finding (if the finding is being appealed)
+        - if changed, state the new finding
     - whether to uphold or change the sanction (if the sanction is being appealed)
+        - if changed (i.e. reduced), state the new sanction
 
     After the hearing completes, the chair provides a written report, about
     a paragraph in length, via email to me, within three business days of
     the hearing. The report must specify the committee's response to the
-    three questions above (including a rationale), who attended the meeting,
+    questions above (including a rationale), who attended the meeting,
     what information was being gathered and considered, whether the votes
     were unanimous, and it must justify, based on the information
     considered, the decision made by the committee.
