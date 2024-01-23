@@ -44,8 +44,16 @@ body: |
     incorporated, and I will watch for reports with similar issues in the
     future.
     {%- else -%}
-    A committee report is available that I think passes muster.
+    A report is available.
     {%- endif %}
+
+    {% if Notes -%}
+    Some notes about this appeal:
+    ---------------------------------------------------------------
+    {{ Notes }}
+    ---------------------------------------------------------------
+
+    {% endif -%}
 
     Please take a look at the case at
     {{ URL }}
