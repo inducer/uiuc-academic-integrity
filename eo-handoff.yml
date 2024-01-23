@@ -32,7 +32,11 @@ body: |
     Dear Elsa,
 
     FAIR{{ CaseID }} has completed the appeals process.
+    {% if Hearing_start == None -%}
+    No hearing was held.
+    {%- else -%}
     The hearing was held {{ Hearing_start | format_timestamp("%B %d %I:%M %p") }}.
+    {%- endif %}
     Appellant(s) for this hearing: {{ Appellants }}.
 
     {% if Number_of_EO_rejections -%}
