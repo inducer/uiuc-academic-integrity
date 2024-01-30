@@ -43,6 +43,8 @@ body: |
     {% if "Committee" in Person_Category -%}
     Thank you for serving on the Academic Appeals Committee this schoolyear.
     A number of appeals cases need to be heard in the near future. 
+    {%- elif Available -%}
+    Thank you for indicating your willingness to serve in an academic integrity hearing.
     {%- else -%}
     One or more appeals cases in CS involving you need to be heard in the near future.
     {%- endif %}
