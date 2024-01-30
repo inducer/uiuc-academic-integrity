@@ -48,7 +48,7 @@ body: |
     {%- else -%}
     One or more appeals cases in CS involving you need to be heard in the near future.
     {%- endif %}
-    To allow these hearings to proceed, please click the following link in
+    To allow these hearing(s) to proceed, please click the following link in
     order to provide your availability:
 
     {{ Availability_URL }}
