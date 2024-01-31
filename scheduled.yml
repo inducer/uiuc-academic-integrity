@@ -30,7 +30,7 @@ subject: |
     {% if Schedule_emails_sent > 0 %}
         [Update #{{ Schedule_emails_sent}}]
     {% endif %}
-    Appeal Hearing for FAIR{{ CaseID }}CS
+    Appeal Hearing for FAIR{{ CaseID }}
 
 body: |
 
