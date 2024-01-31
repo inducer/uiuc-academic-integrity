@@ -28,7 +28,7 @@ body: |
 
     Dear {{ First_name }},
 
-    When attempting to schedule an appeal hearing with your involvement,
+    When attempting to schedule an appeal hearing requiring your involvement,
     I encountered a situation where no possible times work due to incompatible
     availability.
 
