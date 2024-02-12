@@ -1,0 +1,36 @@
+grist_root_url: "https://scicomp-grist.cs.illinois.edu"
+grist_doc_id: s7VzXiAHXbwgivucYprb6z
+
+query: |
+    select *
+    from Persons
+    where Phone is null or Phone == ''
+    and Available
+
+to:
+-
+    name: "{{ Full_name }}"
+    email: "{{ Email }}"
+cc:
+- 
+    name: Andreas Kloeckner
+    email: andreask@illinois.edu
+
+subject: |
+    [TODO] Request for phone number
+
+body: |
+
+    Dear {{ First_name }},
+
+    You are listed as someone who might serve on an academic appeals committee. To
+    allow communications in case of outages or in urgent cases, please respond to
+    this email with a phone number that can be used to reach you quickly during
+    business hours. This phone number will only be shared with chairs of hearing
+    committees (i.e. CS faculty) and used only by them in connection with
+    academic appeals hearings.
+
+    If you prefer not to provide this information, please also respond saying so.
+
+    Thank you!
+    Andreas
