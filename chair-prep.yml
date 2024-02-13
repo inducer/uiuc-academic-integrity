@@ -1,0 +1,93 @@
+grist_root_url: "https://scicomp-grist.cs.illinois.edu"
+grist_doc_id: s7VzXiAHXbwgivucYprb6z
+
+parameters:
+- case_id
+
+query: |
+    select *
+    from Cases
+    where CaseID = {{case_id}}
+
+to:
+-
+    email: "{{ Chair_emails }}"
+    semicolon_separated: true
+
+cc:
+- 
+    name: Andreas Kloeckner
+    email: andreask@illinois.edu
+
+subject: |
+
+    {% if Schedule_emails_sent > 0 %}
+        [Update #{{ Schedule_emails_sent}}]
+    {% endif %}
+    Chairing the Hearing for FAIR{{ CaseID }}
+
+body: |
+
+    Hi,
+
+    Thank you very much for chairing the CS academic appeal
+    hearing for FAIR case {{ CaseID }}. Compared to the
+    companion email sent to all participants, this email
+    contains email and phone contact information for hearing
+    participants (if available) as well as detailed instructions
+    for the chair.
+    
+    Detailed contact information:
+    
+    {{ Role_list_with_email_and_phone }}
+
+    To prepare for chairing the hearing, please take a look at the
+    document at the following URL:
+
+     https://docs.google.com/document/d/1laxfJXXtDLqPtyQvA91d1iOTxUIINAbSsuWX8H2oQ80/edit?usp=sharing
+
+    If you have viewed this document BEFORE FEBRUARY 12, please take another
+    look, there have been SUBSTANTIAL CHANGES.
+
+    --------------------------------------------------
+    
+    As a reminder: The hearing will take place at
+
+    {{ Hearing_start | format_timestamp("%B %d %I:%M %p") }}
+
+    at this Zoom meeting link:
+
+    {{ Hearing_Location }}
+
+    All faculty committee members are alternative hosts for this meeting.
+
+    {% if Notes_for_schedule_email -%}
+    IMPORTANT:
+    ---------------------------------------------------------------
+    {{ Notes_for_schedule_email }}
+    ---------------------------------------------------------------
+
+    {% endif -%}
+
+    Before the hearing, please take a moment to review the details of the
+    case, via the FAIR system:
+
+    {{ URL }}
+
+    You should have access; if you do not, please let me know.
+
+    If you have any questions, please do not hesitate to reach out.
+
+    Andreas
+    Chair, CS Academic Appeals Committee
+
+insert:
+-
+    table: Case_events
+    fields:
+        Case: id
+        Timestamp: | 
+            from time import time
+            time()
+        Event: |
+            "Chair prep email sent"
