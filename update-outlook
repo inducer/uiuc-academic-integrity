@@ -1,0 +1,285 @@
+#! /usr/bin/env python
+
+import os
+from typing import Any, Dict, Mapping, Optional
+
+import requests
+from msal import PublicClientApplication, SerializableTokenCache
+from pygrist_mini import GristClient
+
+
+UIUC_TENANT_ID = "44467e6f-462c-4ea2-823f-7800de5434e3"
+CAL_AUTOMATION_CLIENT_ID = "d5186f13-400b-4139-905f-663ecab4d2fd"
+
+
+AUTH_SCOPES = [
+    "User.Read",
+    "Calendars.Read",
+    "Calendars.Read.Shared",
+    "Calendars.ReadBasic",
+    "Calendars.ReadWrite",
+    "Calendars.ReadWrite.Shared",
+]
+
+
+def get_cal_token() -> str:
+    cache = SerializableTokenCache()
+
+    from xdg_base_dirs import xdg_cache_home
+    cache_file = xdg_cache_home() / "appeals-cal-token-cache.bin"
+    try:
+        with open(cache_file, "r") as inf:
+            cache_data = inf.read()
+    except FileNotFoundError:
+        pass
+    else:
+        cache.deserialize(cache_data)
+
+    app = PublicClientApplication(
+        CAL_AUTOMATION_CLIENT_ID,
+        authority=f"https://login.microsoftonline.com/{UIUC_TENANT_ID}",
+        token_cache=cache)
+
+    accounts = app.get_accounts()
+
+    result = None
+
+    if accounts:
+        chosen, = accounts
+        result = app.acquire_token_silent(AUTH_SCOPES, account=chosen)
+
+    if not result:
+        result = app.acquire_token_interactive(scopes=AUTH_SCOPES)
+
+    if "access_token" in result:
+        cal_access_token = result["access_token"]
+    else:
+        raise RuntimeError(
+                       "unable to authenticate: "
+                       f"{result.get('error')}"
+                       f" ({result.get('error_description')})"
+                       f" [correlation id: {result.get('correlation_id')}]"
+                   )
+
+    if cache.has_state_changed:
+        with open(cache_file, "w") as outf:
+            outf.write(cache.serialize())
+
+    return cal_access_token
+
+
+class HTTPError(Exception):
+    pass
+
+
+class MSCalendarClient:
+
+    def __init__(self, token):
+        self.root_url = "https://graph.microsoft.com/v1.0"
+        self.token = token
+
+    # {{{ generic request methods
+
+    def _request(self,
+                 method, path, query_params: Optional[Mapping[str, str]] = None,
+                 json: Any = None,
+                 ) -> requests.Response:
+        headers = {
+            "Accept": "application/json; charset=utf-8",
+            "Authorization": f"Bearer {self.token}",
+        }
+
+        response = requests.request(
+                method, self.root_url + path,  params=query_params,
+                headers=headers, json=json)
+        if not response.ok:
+            raise HTTPError(f"Status {response.status_code}: {response.text}")
+
+        return response
+
+    def _get_json(self, path: str,
+                  query_params: Optional[Mapping[str, str]] = None) -> Any:
+        return self._request("GET", path, query_params).json()
+
+    def _patch_json(self, path, json: Any,
+                    query_params: Optional[Mapping[str, str]] = None) -> Any:
+        return self._request("PATCH", path, query_params, json=json).json()
+
+    def _post_json(self, path, json: Any,
+                    query_params: Optional[Mapping[str, str]] = None) -> Any:
+        return self._request("POST", path, query_params, json=json).json()
+
+    def list_calendars(self):
+        return self._get_json("/me/calendars")["value"]
+
+    def create_event(self, cal_id: str, event_json: Dict):
+        return self._post_json(f"/me/calendars/{cal_id}/events",
+                               json=event_json)
+
+    def patch_event(self, event_id: str, event_json: Dict):
+        return self._patch_json(f"/me/events/{event_id}", event_json)
+
+    def delete_event(self, event_id: str):
+        return self._request("DELETE", f"/me/events/{event_id}")
+
+
+def list_calendars(
+        args: Any,
+        cal_client: MSCalendarClient, grist_client: GristClient) -> int:
+    print(
+        "\n".join(f"{cal['name']}\t{cal['id']}"
+                for cal in cal_client.list_calendars())
+    )
+    return 0
+
+
+def update_hearing(
+        args: Any,
+        cal_client: MSCalendarClient, grist_client: GristClient) -> int:
+    if args.dry_run:
+        return 0
+
+    if args.calendar_id is None:
+        raise ValueError("--calendar-id option is required to update a hearing")
+
+    cal_id = args.calendar_id
+
+    res, = grist_client.get_records("Cases", filter={"CaseID": [args.case_id]})
+    case_pk = res["id"]
+    case = res["fields"]
+
+    evt_id = case["Outlook_event_ID"]
+    if not case["Hearing_start"]:
+        if evt_id:
+            cal_client.delete_event(evt_id)
+            grist_client.patch_records("Cases", [
+                                           (case_pk, {"Outlook_event_ID": None})
+                                       ])
+        grist_client.add_records(
+             "Case_events",
+             [{"Case": case_pk, "Event": "Calendar event deleted"}])
+        return 0
+
+    res = grist_client.sql(
+        "select * "
+        "from Case_participants "
+        "inner join Persons "
+        "on Person = Persons.id "
+        f'where "Case" = {case_pk}'
+    )
+    participants = [
+        r
+        for r in res
+        if r["Role"] != "No longer involved"
+    ]
+
+    from datetime import datetime
+
+    from tzlocal import get_localzone_name
+    local_tzname = get_localzone_name()
+
+    from zoneinfo import ZoneInfo
+    local_tzinfo = ZoneInfo(key=local_tzname)
+
+    assert local_tzinfo is not None
+
+    hearing_start = datetime.fromtimestamp(
+                   case["Hearing_start"]).astimezone(local_tzinfo)
+    hearing_end = datetime.fromtimestamp(
+                   case["Hearing_end"]).astimezone(local_tzinfo)
+
+    event_json = {
+            "subject": f"FAIR{case['CaseID']} Hearing",
+            "body": {
+                "contentType": "text",
+                "content": f'FAIR URL: {case["URL"]}'
+            },
+            "start": {
+                "dateTime": hearing_start.isoformat(),
+                "timeZone": local_tzname,
+            },
+            "end": {
+                "dateTime": hearing_end.isoformat(),
+                "timeZone": local_tzname,
+            },
+            "location": {
+                "displayName": case["Hearing_Location"]
+            },
+            "attendees": [
+                {
+                    "emailAddress": {
+                        "address": p["Email"],
+                        "name": p["Full_name"]
+                    },
+                    "type": "optional" if "Backup" in p["Role"] else "required"
+                }
+                for p in participants
+            ],
+    }
+    if not evt_id:
+        res = cal_client.create_event(cal_id, event_json)
+        evt_id = res["id"]
+
+        grist_client.patch_records("Cases", [
+                                       (case_pk, {"Outlook_event_ID": evt_id})
+                                   ])
+        grist_client.add_records(
+             "Case_events",
+             [{"Case": case_pk, "Event": "Calendar event created"}])
+    else:
+        cal_client.patch_event(evt_id, event_json)
+
+        grist_client.add_records(
+             "Case_events",
+             [{"Case": case_pk, "Event": "Calendar event updated"}])
+
+    return 0
+
+
+def main():
+    from argparse import ArgumentParser
+    parser = ArgumentParser()
+
+    parser.add_argument(
+                        "--grist-root-url", metavar="URL",
+                        required=True)
+    parser.add_argument(
+                        "--grist-doc-id", metavar="DOC_ID",
+                        required=True)
+    parser.add_argument(
+                        "--grist-api-key", metavar="FILENAME",
+                        default=os.path.expanduser("~/.grist-api-key"),
+                        required=True)
+    parser.add_argument("--calendar-id", metavar="CAL_ID")
+
+    subp = parser.add_subparsers()
+
+    parser_list_calendars = subp.add_parser("list-calendars")
+    parser_list_calendars.set_defaults(func=list_calendars)
+
+    parser_update_hearing = subp.add_parser("update-hearing")
+    parser_update_hearing.add_argument("case_id", type=int)
+    parser_update_hearing.add_argument("-n", "--dry-run", action="store_true")
+    parser_update_hearing.set_defaults(func=update_hearing)
+
+    args = parser.parse_args()
+    with open(args.grist_api_key, "r") as inf:
+        grist_api_key = inf.read().strip()
+
+    cal_client = MSCalendarClient(get_cal_token())
+    grist_client = GristClient(
+            args.grist_root_url,
+            grist_api_key,
+            args.grist_doc_id)
+
+    if not hasattr(args, "func"):
+        parser.print_usage()
+        import sys
+        sys.exit(1)
+
+    import sys
+    sys.exit(args.func(args, cal_client, grist_client))
+
+
+if __name__ == "__main__":
+    main()
