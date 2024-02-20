@@ -1,0 +1,59 @@
+grist_root_url: "https://scicomp-grist.cs.illinois.edu"
+grist_doc_id: s7VzXiAHXbwgivucYprb6z
+
+parameters:
+- case_id
+
+query: |
+    select *
+    from Cases
+    where CaseID = {{case_id}}
+
+to:
+-
+    name: Steve Herzog
+    email: "smherzog@illinois.edu"
+
+cc:
+- 
+    name: Andreas Kloeckner
+    email: andreask@illinois.edu
+
+subject: |
+
+    Conflict Check for FAIR{{ CaseID }}
+
+body: |
+
+    Steve,
+
+    I am assembling a committee to hear an appeal for FAIR{{ CaseID }} to be
+    heard at {{ Hearing_start | format_timestamp("%B %d %I:%M %p") }}.
+
+    Could you please take a look at the rosters of classes taught by these faculty:
+
+    {{ Faculty_list }}
+
+    and let me know if they are currently teaching a class taken by these
+    appellant(s):
+
+    {{ Appellants }}
+
+    A response by email saying 'no conflict' or specifying the nature of the
+    conflict suffices.
+
+    Thanks!
+
+    Andreas
+    Chair, CS Academic Appeals
+
+insert:
+-
+    table: Case_events
+    fields:
+        Case: id
+        Timestamp: | 
+            from time import time
+            time()
+        Event: |
+            "Conflict check sent"
