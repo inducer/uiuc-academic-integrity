@@ -1,0 +1,7 @@
+#! /usr/bin/bash
+
+set -eo pipefail
+
+( cd .. && ./outlook.sh update-hearing "$@")
+( ./mail.sh ./scheduled.yml "$@" )
+( ./mail.sh ./chair-prep.yml "$@" )
