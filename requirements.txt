@@ -3,4 +3,3 @@ msal
 pygrist-mini
 xdg-base-dirs
 tzlocal
-
