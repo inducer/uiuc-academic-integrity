@@ -82,15 +82,20 @@ update:
             import date_utils as du
             import datetime
 
-            deadline = datetime.datetime.fromtimestamp(Response_deadline)
+            if Response_deadline is None:
+                min_bump = 2
+                deadline = None
+            else:
+                min_bump = 1
+                deadline = datetime.datetime.fromtimestamp(Response_deadline)
 
             min_deadline = du.datetime_by_adding_business_days(
                 datetime.datetime.combine(
                     datetime.date.today(),
-                    deadline.time()),
-                1)
+                    datetime.time(17, 0)),
+                min_bump)
 
-            if deadline < min_deadline:
+            if deadline is None or deadline < min_deadline:
                 deadline = min_deadline
 
             deadline.timestamp()
