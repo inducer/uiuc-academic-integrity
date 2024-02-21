@@ -1,0 +1,71 @@
+grist_root_url: "https://scicomp-grist.cs.illinois.edu"
+grist_doc_id: s7VzXiAHXbwgivucYprb6z
+
+parameters:
+- case_id
+
+query: |
+    select *
+    from Cases
+    where CaseID = {{case_id}}
+
+to:
+-
+    email: "{{ Committee_emails }}"
+    semicolon_separated: true
+
+cc:
+- 
+    name: Andreas Kloeckner
+    email: andreask@illinois.edu
+- 
+    name: Heather Zike
+    email: hlzike@illinois.edu
+- 
+    name: Elsa Gunter
+    email: egunter@illinois.edu
+
+subject: |
+
+    {% if Schedule_emails_sent > 0 %}
+        [Update #{{ Schedule_emails_sent}}]
+    {% endif %}
+    Hearing canceled for FAIR{{ CaseID }}, will reschedule
+
+body: |
+
+    All,
+
+    Unfortunately, the hearing for FAIR{{ CaseID }} will have
+    to be canceled for the moment.
+
+    {% if Notes_for_schedule_email -%}
+    IMPORTANT:
+    ---------------------------------------------------------------
+    {{ Notes_for_schedule_email }}
+    ---------------------------------------------------------------
+
+    {% endif -%}
+
+    You will receive word in the near future regarding
+    a rescheduled time.
+
+    Andreas
+    Chair, CS Academic Appeals Committee
+
+insert:
+-
+    table: Case_events
+    fields:
+        Case: id
+        Timestamp: | 
+            from time import time
+            time()
+        Event: |
+            "Canceled"
+
+update:
+    table: Cases
+    fields:
+        Hearing_start: None
+
