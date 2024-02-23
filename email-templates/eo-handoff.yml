@@ -37,7 +37,7 @@ body: |
     {%- else -%}
     The hearing was held {{ Hearing_start | format_timestamp("%B %d %I:%M %p") }}.
     {%- endif %}
-    Appellant(s) for this hearing: {{ Appellants }}.
+    Appellant(s) for this case: {{ Appellants }}.
 
     {% if Number_of_EO_rejections -%}
     A revised committee report is available. Your feedback has been
