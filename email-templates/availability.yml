@@ -34,7 +34,7 @@ subject: |
     {% else %}
         [TODO]
     {% endif %}
-    Availability for Appeal Hearings: {{ Request_group_description }}
+    Availability for Hearings: {{ Request_group_description }}
 
 body: |
 
