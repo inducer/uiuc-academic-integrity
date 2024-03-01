@@ -1,0 +1,6 @@
+#! /usr/bin/bash
+
+set -eo pipefail
+
+./outlook.sh update-hearing "$@"
+( ./mail.sh ./save-the-date.yml "$@" )
