@@ -1,0 +1,70 @@
+grist_root_url: "https://scicomp-grist.cs.illinois.edu"
+grist_doc_id: s7VzXiAHXbwgivucYprb6z
+
+parameters:
+- case_id
+
+query: |
+    select *
+    from Cases
+    inner join Case_participants on Case_participants."Case" = Cases.id
+    inner join Persons on Persons.id = Case_participants.Person
+    where CaseID = {{case_id}}
+    and Case_participants.Role in ('Chair', 'Faculty', 'Backup Faculty')
+to:
+-
+    name: "{{ Full_name }}"
+    email: "{{ Email }}"
+
+cc:
+- 
+    name: Andreas Kloeckner
+    email: andreask@illinois.edu
+
+subject: |
+
+    Conflict Check for FAIR{{ CaseID }}
+
+body: |
+
+    {{ First_name }},
+
+    I am assembling a committee to hear an appeal for FAIR{{ CaseID }} to be
+    heard at {{ Hearing_start | format_timestamp("%B %d %I:%M %p") }}.
+
+    Could you please check whether you have a (potential) conflict of interest
+    with the following and let me know:
+
+    {{ Appellants }}
+
+    The following are examples of conflicts of interest:
+
+    - They are in a class that you are currently teaching.
+    - You are working with them on a project.
+    - You have in the past pursued a FAIR (or other disciplinary) case
+      against them.
+
+    The following is not a conflict of interest:
+
+    - They were in a class you have taught in the past, and they
+      have already been assigned their final grade.
+      
+    When in doubt, ask, or feel free to assume a conflict exists.
+    A response by email saying 'no conflict' or 'yes conflict' suffices.
+
+    Thanks!
+
+    Andreas
+    Chair, CS Academic Appeals
+
+insert:
+-
+    table: Case_events
+    fields:
+        Case: id
+        Timestamp: | 
+            from time import time
+            time()
+        Event: |
+            "Direct conflict check sent"
+        Note: Email
