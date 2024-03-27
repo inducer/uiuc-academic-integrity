@@ -11,6 +11,12 @@ query: |
     inner join Persons on Persons.id = Case_participants.Person
     where CaseID = {{case_id}}
     and Case_participants.Role in ('Chair', 'Faculty', 'Backup Faculty')
+    and not exists (
+        select * from Case_events
+        where Case_events."Case" == Cases.id
+        and Event = 'Direct conflict check sent'
+        and Note = Persons.Email
+    )
 to:
 -
     name: "{{ Full_name }}"
