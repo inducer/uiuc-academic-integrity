@@ -10,12 +10,11 @@ query: |
     inner join Case_participants on Case_participants."Case" = Cases.id
     inner join Persons on Persons.id = Case_participants.Person
     where CaseID = {{case_id}}
-    and Case_participants.Role in ('Chair', 'Faculty', 'Backup Faculty')
+    and Case_participants.Role in ('Chair', 'Faculty', 'Backup Faculty', 'Student member', 'Backup student')
     and not exists (
-        select * from Case_events
-        where Case_events."Case" == Cases.id
-        and Event = 'Direct conflict check sent'
-        and Note = Persons.Email
+        select * from Conflict_reports
+        where Conflict_reports."Case" == Cases.id
+        and Person = Case_participants.Person
     )
 to:
 -
@@ -29,34 +28,29 @@ cc:
 
 subject: |
 
-    Conflict Check for FAIR{{ CaseID }}
+    Conflict Check for FAIR{{ CaseID }} [NEW PROCESS]
 
 body: |
 
     {{ First_name }},
 
-    I am assembling a committee to hear an appeal for FAIR{{ CaseID }} to be
-    heard at {{ Hearing_start | format_timestamp("%B %d %I:%M %p") }}.
-
+    I am assembling a committee to hear an appeal for FAIR{{ CaseID }}.
     Could you please check whether you have a (potential) conflict of interest
-    with the following and let me know:
+    with the following?
 
     {{ Appellants }}
 
-    The following are examples of conflicts of interest:
+    NEW: Please use the following link to report this information:
 
-    - They are in a class that you are currently teaching.
-    - You are working with them on a project.
-    - You have in the past pursued a FAIR (or other disciplinary) case
-      against them.
+    https://scicomp-apps.cs.illinois.edu/form/conflict/{{ inserted_Conflict_reports_0_Key }}
 
-    The following is not a conflict of interest:
+    Detailed instructions are located at the link.
+    Please provide your response by {{ inserted_Conflict_reports_0_Response_deadline | format_timestamp("%B %d %I:%M %p") }}
+    at the latest.
 
-    - They were in a class you have taught in the past, and they
-      have already been assigned their final grade.
-      
-    When in doubt, ask, or feel free to assume a conflict exists.
-    A response by email saying 'no conflict' or 'yes conflict' suffices.
+    Please DISREGARD earlier requests for emailed information, if any.
+    Unless you encounter issues with the form, there is no need to send
+    email.
 
     Thanks!
 
@@ -65,12 +59,19 @@ body: |
 
 insert:
 -
-    table: Case_events
+    table: Conflict_reports
     fields:
         Case: id
-        Timestamp: | 
+        Person: Person
+        Key: |
+            from random import randrange
+            "".join(chr(97+int(randrange(0, 26))) for i in range(20))
+        Response_deadline: |
+
+            from date_utils import advance_deadline
+            advance_deadline(None, 2, 1)
+        Last_nag: |
             from time import time
             time()
-        Event: |
-            "Direct conflict check sent"
-        Note: Email
+        Nag_count: 1
+            
