@@ -79,23 +79,5 @@ update:
             time()
         Response_deadline: |
 
-            import date_utils as du
-            import datetime
-
-            if Response_deadline is None:
-                min_bump = 2
-                deadline = None
-            else:
-                min_bump = 1
-                deadline = datetime.datetime.fromtimestamp(Response_deadline)
-
-            min_deadline = du.datetime_by_adding_business_days(
-                datetime.datetime.combine(
-                    datetime.date.today(),
-                    datetime.time(17, 0)),
-                min_bump)
-
-            if deadline is None or deadline < min_deadline:
-                deadline = min_deadline
-
-            deadline.timestamp()
+            from date_utils import advance_deadline
+            advance_deadline(Response_deadline, 2 ,1)
