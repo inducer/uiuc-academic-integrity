@@ -9,13 +9,11 @@ query: |
     from Cases
     inner join Case_participants on Case_participants."Case" = Cases.id
     inner join Persons on Persons.id = Case_participants.Person
+    left outer join Conflict_reports on (
+        Conflict_reports.Person = Persons.id and Conflict_reports."Case" = Cases.id)
     where CaseID = {{case_id}}
     and Case_participants.Role in ('Chair', 'Faculty', 'Backup Faculty', 'Student member', 'Backup student')
-    and not exists (
-        select * from Conflict_reports
-        where Conflict_reports."Case" == Cases.id
-        and Person = Case_participants.Person
-    )
+    and Conflict_reports."Case" is null
 to:
 -
     name: "{{ Full_name }}"
