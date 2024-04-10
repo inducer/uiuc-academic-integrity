@@ -1,19 +1,20 @@
 grist_root_url: "https://scicomp-grist.cs.illinois.edu"
 grist_doc_id: s7VzXiAHXbwgivucYprb6z
 
-parameters:
-- case_id
-
 query: |
     select *
     from Cases
     inner join Case_participants on Case_participants."Case" = Cases.id
     inner join Persons on Persons.id = Case_participants.Person
     left outer join Conflict_reports on (
-        Conflict_reports.Person = Persons.id and Conflict_reports."Case" = Cases.id)
-    where CaseID = {{case_id}}
+        Conflict_reports.Person = Persons.id
+        and Conflict_reports."Case" = Cases.id)
+        and Conflict_reports.Request_type = 'Direct')
+    where Cases.Hearing_start > unixepoch()
+    and substr(Cases.State, 1, 1) <> '0'
     and Case_participants.Role in ('Chair', 'Faculty', 'Backup Faculty', 'Student member', 'Backup student')
     and Conflict_reports."Case" is null
+
 to:
 -
     name: "{{ Full_name }}"
