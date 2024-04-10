@@ -72,4 +72,5 @@ insert:
             from time import time
             time()
         Nag_count: 1
+        Request_type: "Direct"
             
