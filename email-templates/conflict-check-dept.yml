@@ -1,17 +1,23 @@
 grist_root_url: "https://scicomp-grist.cs.illinois.edu"
 grist_doc_id: s7VzXiAHXbwgivucYprb6z
 
-parameters:
-- case_id
-
 query: |
     select *
     from Cases
-    where CaseID = {{case_id}}
+    inner join Case_participants on Case_participants."Case" = Cases.id
+    inner join Persons on Persons.id = Case_participants.Person
+    left outer join Conflict_reports on (
+        Conflict_reports.Person = Persons.id
+        and Conflict_reports."Case" = Cases.id
+        and Conflict_reports.Request_type = 'Department')
+    where Cases.Hearing_start > unixepoch()
+    and substr(Cases.State, 1, 1) <> '0'
+    and Case_participants.Role in ('Chair', 'Faculty', 'Backup Faculty')
+    and Conflict_reports."Case" is null
 
 to:
 -
-    name: Steve Herzog
+    name: "Steve Herzog"
     email: "smherzog@illinois.edu"
 
 cc:
@@ -21,26 +27,21 @@ cc:
 
 subject: |
 
-    Conflict Check for FAIR{{ CaseID }}
+    Conflict Check: {{ Full_name }} for FAIR{{ CaseID }} [NEW PROCESS]
 
 body: |
 
     Steve,
 
-    I am assembling a committee to hear an appeal for FAIR{{ CaseID }} to be
-    heard at {{ Hearing_start | format_timestamp("%B %d %I:%M %p") }}.
-
-    Could you please take a look at the rosters of classes taught by these faculty:
-
-    {{ Faculty_list }}
-
-    and let me know if they are currently teaching a class taken by these
-    appellant(s):
+    I am assembling a committee to hear an appeal for FAIR{{ CaseID }}.
+    Could you please check whether {{ Full_name_NetID }} has a (potential) conflict of interest
+    with the following?
 
     {{ Appellants }}
 
-    A response by email saying 'no conflict' or specifying the nature of the
-    conflict suffices.
+    NEW: Please use the following link to report this information:
+
+    https://scicomp-apps.cs.illinois.edu/form/conflict/{{ inserted_Conflict_reports_0_Key }}
 
     Thanks!
 
@@ -49,11 +50,19 @@ body: |
 
 insert:
 -
-    table: Case_events
+    table: Conflict_reports
     fields:
         Case: id
-        Timestamp: | 
+        Person: Person
+        Key: |
+            from random import randrange
+            "".join(chr(97+int(randrange(0, 26))) for i in range(20))
+        Response_deadline: |
+
+            from date_utils import advance_deadline
+            advance_deadline(None, 2, 1)
+        Last_nag: |
             from time import time
             time()
-        Event: |
-            "Conflict check sent"
+        Nag_count: 1
+        Request_type: '"Department"'
