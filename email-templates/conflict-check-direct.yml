@@ -8,7 +8,7 @@ query: |
     inner join Persons on Persons.id = Case_participants.Person
     left outer join Conflict_reports on (
         Conflict_reports.Person = Persons.id
-        and Conflict_reports."Case" = Cases.id)
+        and Conflict_reports."Case" = Cases.id
         and Conflict_reports.Request_type = 'Direct')
     where Cases.Hearing_start > unixepoch()
     and substr(Cases.State, 1, 1) <> '0'
