@@ -1,0 +1,86 @@
+grist_root_url: "https://scicomp-grist.cs.illinois.edu"
+grist_doc_id: s7VzXiAHXbwgivucYprb6z
+
+query: |
+    select *
+    from Conflict_reports
+    inner join Persons on Person = Persons.id
+    inner join Cases on  Conflict_reports."Case" = Cases.id
+    where Responded is null
+    and (
+        (Response_deadline is not null and Response_deadline < unixepoch('now'))
+        or Last_nag is null)
+
+to:
+-
+    name: "{{ Full_name if Request_type == 'Direct' else 'Steve Herzog' }}"
+    email: "{{ Email if Request_type == 'Direct' else 'smherzog@illinois.edu'}}"
+cc:
+- 
+    name: Andreas Kloeckner
+    email: andreask@illinois.edu
+
+subject: |
+    {% if Nag_count > 1%}
+        [TODO: REMINDER #{{ Nag_count}}]
+    {% elif Nag_count == 1%}
+        [TODO: REMINDER]
+    {% else %}
+        [TODO]
+    {% endif %}
+    Conflict Check for FAIR{{ CaseID }}
+
+body: |
+
+    Dear {{ First_name }},
+
+    {% if Request_type == "Direct" %}
+    You are slated to be part of the hearing for the academic integrity
+    case FAIR{{ CaseID }}. To allow this hearing to proceed,
+    could you please check whether you have a (potential) conflict of interest
+    with the following?
+    {% else %}
+    XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+    XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+    XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+    XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+    XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+    NEED UPDATED WORDING FOR DEPT CONFLICT CHECK
+    {% endif %}
+
+    {{ Appellants }}
+
+    Please use the following link to report this information:
+
+    {{ Request_URL }}
+
+    Detailed instructions are located at the link.
+
+    {% if Nag_count %}
+    To avoid making my job harder than it already is:
+    {% endif %}
+    Please provide your response by {{ updated_Response_deadline | format_timestamp("%B %d %I:%M %p") }}
+    at the latest.
+
+    {% if Nag_count == 1 %}
+    Thank you!
+    {% endif %}
+    Andreas
+    Chair, CS Academic Appeals Committee
+
+    {% if Nag_count > 1 %}
+    PS: Make these emails stop! Respond now. :)
+    {% endif %}
+
+update:
+    table: Conflict_reports
+    fields:
+        Nag_count: |
+            Nag_count + 1 if Nag_count is not None else 1
+        Last_nag: |
+            from time import time
+            time()
+        Response_deadline: |
+
+            from date_utils import advance_deadline
+            advance_deadline(Response_deadline, 2 ,1)
