@@ -27,7 +27,7 @@ cc:
 
 subject: |
 
-    Conflict Check for FAIR{{ CaseID }} [NEW PROCESS]
+    Conflict Check for FAIR{{ CaseID }}
 
 body: |
 
@@ -39,17 +39,13 @@ body: |
 
     {{ Appellants }}
 
-    NEW: Please use the following link to report this information:
+    Please use the following link to report this information:
 
     https://scicomp-apps.cs.illinois.edu/form/conflict/{{ inserted_Conflict_reports_0_Key }}
 
     Detailed instructions are located at the link.
-    Please provide your response by {{ inserted_Conflict_reports_0_Response_deadline | format_timestamp("%B %d %I:%M %p") }}
-    at the latest.
-
-    Please DISREGARD earlier requests for emailed information, if any.
-    Unless you encounter issues with the form, there is no need to send
-    email.
+    Please provide your response by {{ inserted_Conflict_reports_0_Response_deadline | format_timestamp("%B %d %I:%M %p") }} at the latest.
+    Unless you encounter issues with the form, there is no need to send email.
 
     Thanks!
 
