@@ -1,6 +1,8 @@
 grist_root_url: "https://scicomp-grist.cs.illinois.edu"
 grist_doc_id: s7VzXiAHXbwgivucYprb6z
 
+timezone: America/Chicago
+
 # All text is interpreted as a Jinja template, with row data available.
 # https://jinja.palletsprojects.com/en/3.0.x/templates/
 
