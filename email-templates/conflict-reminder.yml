@@ -34,20 +34,22 @@ subject: |
 
 body: |
 
+    {% if Request_type == "Direct" %}
     Dear {{ First_name }},
 
-    {% if Request_type == "Direct" %}
     You are slated to be part of the hearing for the academic integrity
     case FAIR{{ CaseID }}. To allow this hearing to proceed,
     could you please check whether you have a (potential) conflict of interest
     with the following?
+    {% elif Request_type == "Department" %}
+    Dear Steve,
+
+    I am assembling a committee to hear an appeal for FAIR{{ CaseID }}.
+    Could you please check whether {{ Full_name_NetID }} has a (potential) conflict of interest
+    with the following?
     {% else %}
-    XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-    XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-    XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-    XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-    XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-    NEED UPDATED WORDING FOR DEPT CONFLICT CHECK
+    ERROR
+    {{ 1/0 }}
     {% endif %}
 
     {{ Appellants }}
@@ -58,7 +60,7 @@ body: |
 
     Detailed instructions are located at the link.
 
-    {% if Nag_count %}
+    {% if Nag_count and Request_type == "Direct "%}
     To avoid making my job harder than it already is:
     {% endif %}
     Please provide your response by {{ updated_Response_deadline | format_timestamp("%B %d %I:%M %p") }}
