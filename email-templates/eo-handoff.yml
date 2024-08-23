@@ -70,7 +70,7 @@ insert:
     table: Case_events
     fields:
         Case: id
-        Timestamp: | 
+        Timestamp: |
             from time import time
             time()
         Event: |
