@@ -10,8 +10,10 @@ query: |
     inner join Cases on  Conflict_reports."Case" = Cases.id
     where Responded is null
     and (
-        (Response_deadline is not null and Response_deadline < unixepoch('now'))
-        or Last_nag is null)
+        Cases.Hearing_start >= unixepoch('now')
+        and ((Response_deadline is not null and Response_deadline < unixepoch('now'))
+            or Last_nag is null)
+        )
 
 to:
 -
