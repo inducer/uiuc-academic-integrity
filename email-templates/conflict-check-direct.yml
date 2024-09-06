@@ -23,7 +23,7 @@ to:
     email: "{{ Email }}"
 
 cc:
-- 
+-
     name: Andreas Kloeckner
     email: andreask@illinois.edu
 
@@ -73,4 +73,4 @@ insert:
             time()
         Nag_count: 1
         Request_type: '"Direct"'
-            
+

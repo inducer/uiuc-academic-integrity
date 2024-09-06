@@ -12,7 +12,7 @@ to:
     name: "{{ Full_name }}"
     email: "{{ Email }}"
 cc:
-- 
+-
     name: Andreas Kloeckner
     email: andreask@illinois.edu
 
