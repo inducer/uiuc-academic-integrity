@@ -66,7 +66,8 @@ insert:
         Response_deadline: |
 
             from date_utils import advance_deadline
-            min(Hearing_start, advance_deadline(None, 2, 1))
+            before_hearing = Hearing_start - 4*3600
+            min(before_hearing, advance_deadline(None, 2, 1))
 
         Last_nag: |
             from time import time
