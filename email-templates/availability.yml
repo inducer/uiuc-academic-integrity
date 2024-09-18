@@ -24,7 +24,7 @@ to:
     name: "{{ Full_name }}"
     email: "{{ Email }}"
 cc:
-- 
+-
     name: Andreas Kloeckner
     email: andreask@illinois.edu
 
@@ -44,7 +44,7 @@ body: |
 
     {% if "Committee" in Person_Category -%}
     Thank you for serving on the Academic Appeals Committee this schoolyear.
-    A number of appeals cases need to be heard in the near future. 
+    A number of appeals cases need to be heard in the near future.
     {%- elif Available -%}
     Thank you for indicating your willingness to serve in an academic integrity hearing.
     {%- else -%}
@@ -55,7 +55,7 @@ body: |
 
     {{ Availability_URL }}
 
-    {% if Nag_count %}
+    {% if Nag_count and Category.startswith("Faculty") %}
     To avoid making my job harder than it already is:
     {% endif %}
     Please provide your response by {{ updated_Response_deadline | format_timestamp("%B %d %I:%M %p") }}
@@ -67,7 +67,7 @@ body: |
     Andreas
     Chair, CS Academic Appeals Committee
 
-    {% if Nag_count %}
+    {% if Nag_count and Category.startswith("Faculty") %}
     PS: Make these emails stop! Respond now. :)
     {% endif %}
 
