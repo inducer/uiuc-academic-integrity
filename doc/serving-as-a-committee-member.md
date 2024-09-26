@@ -6,6 +6,8 @@
 
 * Mar 20, 2024: Add note about interactions with third parties.
 
+See [here](https://github.com/inducer/uiuc-academic-integrity/blob/main/doc/serving-as-a-committee-member.md) for a full change log.
+
 ## Your role as a committee member
 
 * View yourself like a member of a jury. You vote on the outcome of a case you hear. You are responsible for gathering enough information in order to be able to do so.  

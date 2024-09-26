@@ -10,6 +10,8 @@
 * Mar 20, 2024: Add a note about interacting with third parties.  
 * Apr 17, 2024: Clarified expectations on report workflow via Box notes.
 
+See [here](https://github.com/inducer/uiuc-academic-integrity/commits/main/doc/chairing-a-hearing.md) for the full change log.
+
 ## Your role as chair
 
 * You should be impartial. You do not vote.  

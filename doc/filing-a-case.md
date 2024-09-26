@@ -8,6 +8,9 @@ Without waiting until the end of the term
 
 * Sep 25, 2024: Initial circulation date
 
+A fully detailed changelog can be found here:
+[here](https://github.com/inducer/uiuc-academic-integrity/commits/main/doc/filing-a-case.md).
+
 ## About this Document
 
 Read the [Provost's Quick Reference Guide](https://provost.illinois.edu/policies/policies/academic-integrity/instructors-quick-reference-guide-to-academic-integrity/) (just \~900 words) on academic integrity. The rest of this document assumes that you know those basics and provides concrete implementation advice.
