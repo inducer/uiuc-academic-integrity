@@ -1,7 +1,8 @@
 #! /usr/bin/env python
 
 import os
-from typing import Any, Dict, Mapping, Optional
+from collections.abc import Mapping
+from typing import Any, Optional
 
 import requests
 from msal import PublicClientApplication, SerializableTokenCache
@@ -28,7 +29,7 @@ def get_cal_token() -> str:
     from xdg_base_dirs import xdg_cache_home
     cache_file = xdg_cache_home() / "appeals-cal-token-cache.bin"
     try:
-        with open(cache_file, "r") as inf:
+        with open(cache_file) as inf:
             cache_data = inf.read()
     except FileNotFoundError:
         pass
@@ -90,7 +91,7 @@ class MSCalendarClient:
         }
 
         response = requests.request(
-                method, self.root_url + path,  params=query_params,
+                method, self.root_url + path, params=query_params,
                 headers=headers, json=json)
         if not response.ok:
             raise HTTPError(f"Status {response.status_code}: {response.text}")
@@ -112,11 +113,11 @@ class MSCalendarClient:
     def list_calendars(self):
         return self._get_json("/me/calendars")["value"]
 
-    def create_event(self, cal_id: str, event_json: Dict):
+    def create_event(self, cal_id: str, event_json: dict):
         return self._post_json(f"/me/calendars/{cal_id}/events",
                                json=event_json)
 
-    def patch_event(self, event_id: str, event_json: Dict):
+    def patch_event(self, event_id: str, event_json: dict):
         return self._patch_json(f"/me/events/{event_id}", event_json)
 
     def delete_event(self, event_id: str):
@@ -263,7 +264,7 @@ def main():
     parser_update_hearing.set_defaults(func=update_hearing)
 
     args = parser.parse_args()
-    with open(args.grist_api_key, "r") as inf:
+    with open(args.grist_api_key) as inf:
         grist_api_key = inf.read().strip()
 
     cal_client = MSCalendarClient(get_cal_token())
