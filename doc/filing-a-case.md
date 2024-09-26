@@ -24,7 +24,7 @@ Read the [Provost's Quick Reference Guide](https://provost.illinois.edu/policies
 * The student has the option to request an appeal (within 5 business days after you file your finding).  
 * An appeal hearing occurs (appeal request from student \+ 20 business days).
 
-## D **does not change** even if the case reverts to an earlier step in the process for any reason.
+D **does not change** even if the case reverts to an earlier step in the process for any reason.
 
 ## Guidelines
 
