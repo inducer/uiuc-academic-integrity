@@ -1,0 +1,66 @@
+grist_root_url: "https://scicomp-grist.cs.illinois.edu"
+grist_doc_id: s7VzXiAHXbwgivucYprb6z
+
+timezone: America/Chicago
+
+parameters:
+- request_group
+
+query: |
+    select *
+    from Availability_requests
+    inner join Persons on Person = Persons.id
+    where Responded is null
+    and (
+        (Response_deadline is not null and Response_deadline < unixepoch('now'))
+        or Last_nag is null)
+    and Request_group == {{ request_group }}
+
+to:
+-
+    name: "{{ Full_name }}"
+    email: "{{ Email }}"
+cc:
+-
+    name: Andreas Kloeckner
+    email: andreask@illinois.edu
+
+subject: |
+    URGENT Hearing coverage needed: {{ Request_group_description }}
+
+body: |
+
+    Dear {{ First_name }},
+
+    Thank you for serving on the Academic Appeals Committee this schoolyear.
+    An urgent need for faculty coverage exists to cover hearings happening
+    in the very near future.
+
+    Please go to the following URL
+
+    {{ Availability_URL }}
+
+    and let me know whether you are available to serve at the shown times.
+
+    NOTE: This poll works a little differently than the ones you might be
+    used to. Rather than allowing you to draw your availability, you are
+    simply asked to provide yes/no availability answers for the given
+    times. You can provide this answer by clicking on the time slot,
+    initially shown in blue.
+
+    Thank you!
+    Andreas
+    Chair, CS Academic Appeals Committee
+
+update:
+    table: Availability_requests
+    fields:
+        Nag_count: |
+            Nag_count + 1 if Nag_count is not None else 1
+        Last_nag: |
+            from time import time
+            time()
+        Response_deadline: |
+
+            from date_utils import advance_deadline
+            advance_deadline(Response_deadline, 2 ,1)
