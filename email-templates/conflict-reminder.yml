@@ -6,9 +6,12 @@ timezone: America/Chicago
 query: |
     select *
     from Conflict_reports
-    inner join Persons on Person = Persons.id
-    inner join Cases on  Conflict_reports."Case" = Cases.id
+    inner join Persons on Conflict_reports.Person = Persons.id
+    inner join Cases on Conflict_reports."Case" = Cases.id
+    inner join Case_participants on Conflict_reports."Case" = Case_participants."Case"
+      and Persons.id = Case_participants.Person
     where Responded is null
+    and Role <> 'No longer involved'
     and (
         Cases.Hearing_start >= unixepoch('now')
         and ((Response_deadline is not null and Response_deadline < unixepoch('now'))
