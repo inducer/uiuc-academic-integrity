@@ -1,8 +1,8 @@
-#! /usr/bin/env python
+#! /usr/bin/env python3
 
 import os
 from collections.abc import Mapping
-from typing import Any, Optional
+from typing import Any
 
 import requests
 from msal import PublicClientApplication, SerializableTokenCache
@@ -82,7 +82,7 @@ class MSCalendarClient:
     # {{{ generic request methods
 
     def _request(self,
-                 method, path, query_params: Optional[Mapping[str, str]] = None,
+                 method, path, query_params: Mapping[str, str] | None = None,
                  json: Any = None,
                  ) -> requests.Response:
         headers = {
@@ -99,15 +99,15 @@ class MSCalendarClient:
         return response
 
     def _get_json(self, path: str,
-                  query_params: Optional[Mapping[str, str]] = None) -> Any:
+                  query_params: Mapping[str, str] | None = None) -> Any:
         return self._request("GET", path, query_params).json()
 
     def _patch_json(self, path, json: Any,
-                    query_params: Optional[Mapping[str, str]] = None) -> Any:
+                    query_params: Mapping[str, str] | None = None) -> Any:
         return self._request("PATCH", path, query_params, json=json).json()
 
     def _post_json(self, path, json: Any,
-                    query_params: Optional[Mapping[str, str]] = None) -> Any:
+                    query_params: Mapping[str, str] | None = None) -> Any:
         return self._request("POST", path, query_params, json=json).json()
 
     def list_calendars(self):
