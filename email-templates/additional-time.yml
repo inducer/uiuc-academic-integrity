@@ -45,6 +45,13 @@ body: |
 
     {{ Availability_URL }}
 
+    {% if Number_of_contextual_requests %}
+    You will be able to see availability information for other participants
+    in the hearing as part of this interface. Please ensure that there is
+    at least an hour of overlap between your availability and that of
+    the other participants.
+    {%- endif -%}
+
     Please provide your response by {{ updated_Response_deadline | format_timestamp("%B %d %I:%M %p") }}.
 
     Thank you!
