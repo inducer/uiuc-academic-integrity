@@ -23,7 +23,7 @@ cc:
 
 subject: |
 
-    Student committee members for FAIR {{ CaseID }} hearing
+    Student committee members for FAIR{{ CaseID }} hearing
 
 body: |
 
@@ -31,7 +31,11 @@ body: |
 
     Could you please find student committee members for the hearing for FAIR{{ CaseID }}?
 
-    The appellants for this hearing are: {{ Appellants }}
+    Please submit their email addresses using the form at:
+    https://scicomp-apps.cs.illinois.edu/form/student-request/{{ inserted_Student_requests_0_Key }}
+    This will automatically let me know; there is no need to send a separate email.
+
+    The appellant(s) for this hearing are: {{ Appellants }}
 
     {% if Notes -%}
     Some notes about this appeal:
@@ -47,6 +51,14 @@ body: |
     Andreas
 
 insert:
+-
+    table: Student_requests
+    fields:
+        Case: id
+        Key: |
+            from random import randrange
+            "".join(chr(97+int(randrange(0, 26))) for i in range(20))
+
 -
     table: Case_events
     fields:
