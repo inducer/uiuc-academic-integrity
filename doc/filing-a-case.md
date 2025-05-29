@@ -64,7 +64,7 @@ There are some tools available for detecting unauthorized sharing of code among 
 * [https://github.com/dodona-edu/dolos](https://github.com/dodona-edu/dolos) \- Runs locally, Javascript.
 * [https://github.com/manuel-freire/ac2](https://github.com/manuel-freire/ac2) \- Runs locally, Java.
 * [https://theory.stanford.edu/\~aiken/moss/](https://theory.stanford.edu/~aiken/moss/) \- Relies on an Internet-based service run, see below on potential FERPA concerns. Output is a bit clunky/old-fashioned, but has been the go-to tool for a long time.
-* Don’t discount the classics\! Diff and grep can be quite helpful. (Consider diff options \--ignore-all-space, –ignore-case.)
+* Don’t discount the classics\! Diff and grep can be quite helpful. (Consider diff options `--ignore-all-space`, `--ignore-case`.)
 
 For written assignments, there are fewer tools available. All appear to be web-based, no endorsement intended:
 
@@ -81,7 +81,7 @@ Be mindful of your obligations under FERPA when using external tools. You may ne
 
 FAIR pre-fills most of the letter to the student. For example, for the common case of ‘unexplained code similarity’, a snippet like this may suffice:
 
-The file ‘xyz.py’ you submitted for MP 5 has many lines identical to another student's submission. The two files are attached, as is an automated report on detected similarities.
+> The file ‘xyz.py’ you submitted for MP 5 has many lines identical to another student's submission. The two files are attached, as is an automated report on detected similarities.
 
 Course policies for CS123 in the fall of 2050 can be found at https://xyz.illinois.edu/.
 
