@@ -1,0 +1,83 @@
+grist_root_url: "https://scicomp-grist.cs.illinois.edu"
+grist_doc_id: s7VzXiAHXbwgivucYprb6z
+
+timezone: America/Chicago
+
+parameters:
+- request_id
+
+query: |
+    select *
+    from Availability_requests
+    inner join Persons on Person = Persons.id
+    where Availability_requests.id = {{ request_id }}
+
+to:
+-
+    name: "{{ Full_name }}"
+    email: "{{ Email }}"
+
+cc:
+-
+    name: Andreas Kloeckner
+    email: andreask@illinois.edu
+
+subject: |
+
+    [TODO] Additional availability needed for Appeal Hearing
+
+body: |
+
+    Dear {{ First_name }},
+
+    You must be misunderstanding something here. Assuming you are interested
+    in having your appeal hearing actually scheduled, it would be strongly
+    to your advantage to indicate more availability than you have in the poll.
+    To quote the request:
+
+    > One committee hearing requires the joint availability of eight people,
+    > so please be as generous as you can with your time.
+
+    Given as little availability as you have provided, it is basically guaranteed that
+    I will not be able to find a suitable timeslot that suits you and four faculty, two
+    students, and the instructor. I may either schedule the hearing without considering
+    your availability (as allowed by the student code), or postpone scheduling until
+    more availability becomes available.
+
+    So please revise your response to the availability poll:
+
+    {{ Availability_URL }}
+
+    {% if Number_of_contextual_requests %}
+    You will be able to see availability information for other participants
+    in the hearing as part of this interface. Please ensure that there is
+    at least an hour of overlap between your availability and that of
+    the other participants.{{" "}}
+    {%- endif -%}
+
+    Please provide your response by {{ updated_Response_deadline | format_timestamp("%B %d %I:%M %p") }}.
+
+    Andreas
+    Chair, CS Academic Appeals Committee
+
+update:
+    table: Availability_requests
+    fields:
+        Responded: None
+        Response_deadline: |
+
+            import date_utils as du
+            import datetime
+
+            deadline = datetime.datetime.fromtimestamp(Response_deadline)
+
+            min_deadline = du.datetime_by_adding_business_days(
+                datetime.datetime.combine(
+                    datetime.date.today(),
+                    deadline.time()),
+                1)
+
+            if deadline < min_deadline:
+                deadline = min_deadline
+
+            deadline.timestamp()
