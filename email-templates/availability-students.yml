@@ -1,0 +1,73 @@
+grist_root_url: "https://scicomp-grist.cs.illinois.edu"
+grist_doc_id: s7VzXiAHXbwgivucYprb6z
+
+timezone: America/Chicago
+
+# All text is interpreted as a Jinja template, with row data available.
+# https://jinja.palletsprojects.com/en/3.0.x/templates/
+
+parameters:
+- request_group
+
+query: |
+    select *
+    from Availability_requests
+    inner join Persons on Person = Persons.id
+    where Responded is null
+    and (
+        (Response_deadline is not null and Response_deadline < unixepoch('now'))
+        or Last_nag is null)
+    and Request_group == {{ request_group }}
+
+to:
+-
+    name: "{{ Full_name }}"
+    email: "{{ Email }}"
+cc:
+-
+    name: Andreas Kloeckner
+    email: andreask@illinois.edu
+-
+    name: Heather Zike
+    email: hlzike@illinois.edu
+
+subject: |
+    Availability for Academic Integrity Hearings: {{ Request_group_description }}
+
+body: |
+
+    Dear {{ First_name }},
+
+    I am writing today to ask whether you might be willing to help with academic integrity
+    hearings in the CS department in the near future. This is a bit of a desperate
+    plea since we have a number of hearings coming up very soon that still lack student
+    committee members. To see the required hearing times and indicate your availability,
+    please click this link:
+
+    {{ Availability_URL }}
+
+    Additionally, if you know of anyone else who might be willing to help out, please
+    forward their name. The link above is personalized to you, so please don't forward
+    the email.
+
+    You are receiving this email because, according to my records, you have served
+    on hearing committees in the past. If you have graduated in the meantime or will
+    otherwise be unavailable going forward, please let me know, so that I can take you
+    off the list.
+
+    Thank you for considering this request,
+    Andreas
+    Chair, CS Academic Appeals Committee
+
+update:
+    table: Availability_requests
+    fields:
+        Nag_count: |
+            Nag_count + 1 if Nag_count is not None else 1
+        Last_nag: |
+            from time import time
+            time()
+        Response_deadline: |
+
+            from date_utils import advance_deadline
+            advance_deadline(Response_deadline, 2 ,1)
