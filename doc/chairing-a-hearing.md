@@ -106,6 +106,8 @@ Unless you have strong reasons to do otherwise, please use Box’s “notes” f
 
 Once the report is finished and approved, please share it with Andreas (via the built-in “Share” feature) *and* send a separate email to him mentioning that the report is complete and ready for processing. If there are issues with the report, Andreas will provide feedback typically via notes on the report directly in Box, allowing you to address them. Once done, once again please send a quick email to indicate that the revisions have been completed and approved by the committee.
 
+While the FAIR portal allows you to do so, **PLEASE DO NOT UNDER ANY CIRCUMSTANCES send the report to the student**.
+
 By the student code, the report is due **within three business days** of the appeal hearing.
 
 ## Interactions with third parties
