@@ -41,19 +41,29 @@ body: |
     I am writing today to ask whether you might be willing to help with academic integrity
     hearings in the CS department in the near future. This is a bit of a desperate
     plea since we have a number of hearings coming up very soon that still lack student
-    committee members. To see the required hearing times and indicate your availability,
-    please click this link:
+    committee members. To see the hearing times for which committe members are needed
+    and to indicate your availability, please click this link:
 
     {{ Availability_URL }}
+
+    If you would like to get a sense for how these hearings proceed, you may check
+    out the documentation we have for (faculty) committee chairs, this may still
+    give you a sense:
+
+    https://github.com/inducer/uiuc-academic-integrity/blob/main/doc/chairing-a-hearing.md
 
     Additionally, if you know of anyone else who might be willing to help out, please
     forward their name. The link above is personalized to you, so please don't forward
     the email.
 
-    You are receiving this email because, according to my records, you have served
-    on hearing committees in the past. If you have graduated in the meantime or will
-    otherwise be unavailable going forward, please let me know, so that I can take you
-    off the list.
+    You are receiving this email because either:
+
+    - according to my records, you have served on hearing committees in the past, or
+    - someone recommended you as a potential hearing committee member (hopefully
+      with your knowledge).
+
+    If you have graduated in the meantime or will otherwise be unavailable going
+    forward, please let me know, so that I can take you off the list.
 
     Thank you for considering this request,
     Andreas
