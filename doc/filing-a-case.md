@@ -7,6 +7,7 @@ Without waiting until the end of the term
 ## Change Log
 
 * Sep 25, 2024: Initial circulation date
+* Aug 26, 2025: Added References section.
 
 A fully detailed changelog can be found here:
 [here](https://github.com/inducer/uiuc-academic-integrity/commits/main/doc/filing-a-case.md).
@@ -14,6 +15,8 @@ A fully detailed changelog can be found here:
 ## About this Document
 
 Read the [Provost's Quick Reference Guide](https://provost.illinois.edu/policies/policies/academic-integrity/instructors-quick-reference-guide-to-academic-integrity/) (just \~900 words) on academic integrity. The rest of this document assumes that you know those basics and provides concrete implementation advice.
+
+See [References](#references) below for more information.
 
 ## How does a case proceed? (i.e. timeline)
 
@@ -31,7 +34,7 @@ D **does not change** even if the case reverts to an earlier step in the process
 
 ## Guidelines
 
-* Read the [Provost's Quick Reference Guide](https://provost.illinois.edu/policies/policies/academic-integrity/instructors-quick-reference-guide-to-academic-integrity/) on academic integrity.
+* Read the [Provost's Quick Reference Guide][provost] on academic integrity.
 * **Precision** in the original allegation counts. Ask yourself how the allegation could be misunderstood or unclear, especially to a student who may be an unwitting participant.
   * Effort here pays for itself many times over in later stages of the process: less arguing with the student, reduced appeal rates, …
 * **Well-documented:**  Put key evidence and course policies  into the FAIR case, so that it’s clear to everyone what is being alleged.
@@ -102,7 +105,7 @@ In particular, we have had major problems arranging appeals from spring term tha
 
 ## Preparing to File
 
-If you have not filed an academic integrity case recently, first read the [Provost's Quick Reference Guide](https://provost.illinois.edu/policies/policies/academic-integrity/instructors-quick-reference-guide-to-academic-integrity/) and the relevant parts of the student code’s discussion of [academic integrity infractions](https://studentcode.illinois.edu/article1/part4/1-402/).
+If you have not filed an academic integrity case recently, first read the [Provost's Quick Reference Guide][provost] and the relevant parts of the student code’s discussion of [academic integrity infractions](https://studentcode.illinois.edu/article1/part4/1-402/).
 
 Take a moment to consider whether the observed behavior merits an academic integrity allegation.   Minor misdeeds, honest mistakes, and misunderstanding can be handled using standard classroom processes (e.g. deducting points, giving warnings).   Does it seem like the student was deliberately or negligently violating the academic integrity rules in a way that you consider significant?
 
@@ -185,3 +188,12 @@ Similarly, you have a range of options for the sanction when two students worked
 ## The role of course staff
 
 In larger classes, the first suspicion is often raised by a member of your course staff. Staff often help with collecting and organizing evidence. However, with the possible exception of a few very experienced senior TAs, they do not have the training or maturity to take the matter further. It is your responsibility to decide whether to file charges, speak with the students, determine the appropriate punishment, and so forth.
+
+
+## References
+
+- [College of LAS summary on Academic Integrity](https://las.illinois.edu/academics/integrity). Accessed Aug 26, 2025.
+- [UIUC Student Code, Article 1, Part 4](https://studentcode.illinois.edu/article1/part4). Accessed Aug 26, 2025.
+- [Provost's Quick Reference Guide][provost]
+
+[provost]: https://provost.illinois.edu/policies/policies/academic-integrity/instructors-quick-reference-guide-to-academic-integrity/
