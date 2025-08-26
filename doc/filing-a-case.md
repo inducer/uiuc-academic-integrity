@@ -9,8 +9,7 @@ Without waiting until the end of the term
 * Sep 25, 2024: Initial circulation date
 * Aug 26, 2025: Added References section.
 
-A fully detailed changelog can be found here:
-[here](https://github.com/inducer/uiuc-academic-integrity/commits/main/doc/filing-a-case.md).
+[Fully detailed changelog](https://github.com/inducer/uiuc-academic-integrity/commits/main/doc/filing-a-case.md)
 
 ## About this Document
 
