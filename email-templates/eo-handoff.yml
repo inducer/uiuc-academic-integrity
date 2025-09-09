@@ -20,6 +20,9 @@ cc:
 - 
     name: Andreas Kloeckner
     email: andreask@illinois.edu
+-
+    email: "{{ Chair_emails }}"
+    semicolon_separated: true
 
 subject: |
 
