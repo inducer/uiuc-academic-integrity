@@ -26,7 +26,7 @@
 
   \dots especially in hard/prestigious classes
 
-  (``looks good on a transcript'') 
+  (``looks good on a transcript'')
 - So people will cheat, or try to
 
 \bigskip
@@ -59,7 +59,7 @@ Others:
 - Submit the same work twice
 - Collaborate when not permitted
 - Let ChatGPT do the thing
-  
+
 ** Infractions: Plagiarism
 
 *Plagiarism:* Represent the words, work, or ideas of another as one's own
@@ -143,7 +143,7 @@ Uncommon:
 
 Within *five business days of finding*: send email (FAIR has instructions).
 Otherwise findings becomes final.
-    
+
 \bigskip
 Can appeal either
 - *finding and sanction*, or
