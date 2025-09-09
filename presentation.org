@@ -1,0 +1,190 @@
+#+TITLE: Academic Integrity for First-Time Users of Universities
+#+AUTHOR: Andreas Kloeckner
+#+EMAIL: andreask@illinois.edu
+#+DATE: September 9, 2025
+#+LANGUAGE: en
+
+#+startup: beamer
+#+LaTeX_CLASS: beamer
+#+LaTeX_CLASS_OPTIONS: [bigger]
+#+OPTIONS: H:2 toc:nil
+
+#+BEAMER_HEADER: \let\plainhref=\href
+#+BEAMER_HEADER: \let\plainurl=\url
+#+BEAMER_HEADER: \def\href#1#2{\plainhref{#1}{{\color{blue}\uline{#2}}}}
+#+BEAMER_HEADER: \def\url#1{\href{#1}{\texttt{#1}}}
+
+* Presentation
+
+** Academic Integrity: Why?
+
+- /Nobody/ likes grades
+
+  But they're not going away anytime soon
+- Good grades can confer meaningful advantages in life
+- Getting good grades takes work\dots
+
+  \dots especially in hard/prestigious classes
+
+  (``looks good on a transcript'') 
+- So people will cheat, or try to
+
+\bigskip
+Left unchecked, this would
+
+- devalue transcripts and degrees
+- demotivate honest participants
+- demotivate instructors
+
+** Infractions: Overview
+The Big Four:
+
+- Cheating
+- Plagiarism
+- Fabrication
+- Facilitation
+
+\medskip
+Others:
+
+- Bribes, Favors, Threats
+- Academic Interference
+** Infractions: Cheating
+
+*Cheating*: use unauthorized resources or materials
+
+- Let others work on your behalf
+  - peer takes exam as you
+  - hire a term paper company
+- Submit the same work twice
+- Collaborate when not permitted
+- Let ChatGPT do the thing
+  
+** Infractions: Plagiarism
+
+*Plagiarism:* Represent the words, work, or ideas of another as one's own
+- Copying someone else's answer
+- Quotation without disclosure (i.e. improper citation)
+  - Copy from Github
+  - Copy from a book
+- Paraphrase without acknowledgment
+  - Reword Wikipedia
+
+\bigskip
+*Proper Citation* makes all the difference:
+#+BEGIN_QUOTE
+If you explicitly and precisely disclose the source *in a place the instructor will notice*, you generally will not be accused of plagiarism.
+#+END_QUOTE
+
+** Infractions: Fabrication
+
+*Fabrication:* Falsify, lie, or invent information
+- Fake data in a lab experiment
+- Alter an exam after grading
+- Provide false or misleading information
+
+** Infractions: Facilitation
+
+*Facilitation:* Help (or attempt to help!) others commit infractions
+- Allow another to copy
+- Take an exam for someone else
+- Grab a copy of an exam to show around
+
+\bigskip
+Sources and sinks:
+- Often difficult to determine who copied and who allowed copying to happen
+- Approach in student code: same treatment for ``source'' and ``sink''
+
+** Clif Notes for the Remainder
+
+#+LATEX: \begin{center}
+\Huge *Just don't.*
+#+LATEX: \end{center}
+
+\bigskip
+- Getting caught up in `the system' is *unpleasant*
+  - Purposefully so
+- /Will/ limit your ability to get awards/fellowships/\dots
+- May or may not be reflected on your transcript
+- Repeat offenses may get you kicked out of school
+
+** Process
+
+- Instructor `suspects something' or conducts routine check (e.g. automated plagiarism checking)
+- Assembles body of evidence
+- Files allegation via FAIR
+  - Automated email to you, with a *deadline of 10 business days*
+  - No recourse if you don't respond
+  - *You are responsible for checking your Illinois email* sufficiently often
+- Instructor may amend allegation during this time
+- *Student response* via FAIR (not email or other way), may provide additional evidence
+- Instructor files *finding* and sets *sanction*
+- Student may appeal
+
+** Sanctions
+*Typical* (suggested by [[https://siebelschool.illinois.edu/academics/honor-code][CS Honor Code]]): Both
+- *Zero* on assignment, /and/
+- *Letter grade drop* in course
+
+\medskip
+Other options:
+- Reduced grade on assignment/exam/evaluated work
+- Denial of credit in proficiency exam
+- Failing grade in course
+
+\medskip
+Uncommon:
+- Required attendance at a noncredit AI (\dots) workshop
+- Difficult make-up assignments
+- Any sanction, discussed and agreed to in writing by instructor and student
+- Written warning
+
+** Appeals
+
+Within *five business days of finding*: send email (FAIR has instructions).
+Otherwise findings becomes final.
+    
+\bigskip
+Can appeal either
+- *finding and sanction*, or
+- *just sanction*.
+
+\bigskip
+Need *grounds for appeal*. One of:
+- (1) Instructor did not follow procedure, *and* this affected the outcome.
+- (2) Instructor (or other official) had conflict of interest or bias that affected the outcome.
+- (3) Sanctions were not appropriate for violation.
+- (4) New information became available after instructor decision, *and* would have affected the outcome.
+
+** Appeals Process: Committee
+
+Required:
+
+- Chair (CS faculty member, does not vote, impartial, writes report)
+- Two voting CS faculty members
+- One voting student member
+
+\medskip
+Optional:
+- Appellant (may attend, hearing proceeds if not present)
+- Instructor (may attend, hearing proceeds if not present)
+- Consultant (at the appellant's option, may speak with appellant but no-one else)
+
+** Appeals Process: Hearing
+
+- *Appellant notified of time* five business days ahead of time, takes place on Zoom.
+- Opening Statements by appellant and instructor
+- *Open discussion*, led by voting committee members
+  - Instructor and student may ask questions through chair
+- Instructor, appellant, consultant dismissed
+- *Closed discussion* and *vote* (simple majority)
+- Chair writes report, department reviews and sends decision notice
+
+** Resources
+
+- [[https://studentcode.illinois.edu/article1/part4/1-402][Student code]]
+- College of LAS [[https://las.illinois.edu/academics/integrity][Academic Integrity Explainer]]
+- [[https://las.illinois.edu/academics/integrity][Provost's Quick Reference Guide]]
+- [[https://github.com/inducer/uiuc-academic-integrity/blob/main/doc/filing-a-case.md][CS instructor's guide]]
+- [[https://github.com/inducer/uiuc-academic-integrity/][Github: UIUC CS Academic Integrity]]
+
