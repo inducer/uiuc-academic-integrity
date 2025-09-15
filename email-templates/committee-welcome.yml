@@ -1,0 +1,86 @@
+grist_root_url: "https://scicomp-grist.cs.illinois.edu"
+grist_doc_id: s7VzXiAHXbwgivucYprb6z
+
+timezone: America/Chicago
+
+query: |
+    select *
+    from Persons
+    where Category == 'Faculty on Committee'
+
+to:
+-
+    name: "{{ Full_name }}"
+    email: "{{ Email }}"
+cc:
+-
+    name: Andreas Kloeckner
+    email: andreask@illinois.edu
+
+subject: |
+    [Academic Appeals Committee] Welcome
+
+body: |
+
+    Dear {{ First_name }},
+
+    I just received word from Nancy that you will be serving on the academic
+    appeals committee for this school year. Welcome! My name is Andreas, I am the
+    chair.
+
+    {%- if Load_percentage != None and Load_percentage != 100 %}
+
+    You are assigned for {{ Load_percentage }}% service.
+    ({{ Notes}})
+    {%- endif -%}
+
+    {{ '' }}
+
+    Here is what to expect:
+
+    - As the semester gets going, I will send you requests for your availability.
+      Please respond to those as quickly as you can.
+
+      Based on this information, I will schedule you for committee hearings.
+      These may happen at any time, but there will likely be bigger batches
+      of them towards the end of each semester. You will serve either as an
+      (impartial) chair or as a regular voting committee member.
+
+    - To get a sense for how a hearing proceeds, you may look at the
+      documentation provided for committee chairs:
+
+      https://github.com/inducer/uiuc-academic-integrity/blob/main/doc/chairing-a-hearing.md
+
+    - I keep statistics regarding each committee member's workload,
+      using a metric that assigns 1 point for a hearing, 1.5 points for
+      chairing, and 0.25 points for serving as a backup member.
+      Some particularly laborious cases have a workload multiplier in order
+      to further even things out. I try my best to keep this workload
+      balanced across committee members. You may request (anonymized)
+      'standings' from me at any time if you are worried about your
+      workload.
+
+    - By its nature, appeals work can't help but stretch into early
+      summer, to deal with the typically somewhat large number of appeals
+      that show up towards the end of the school year. If you foresee
+      that it will be difficult for you to serve during the summer,
+      please reach out to Nancy and me regarding a different service
+      assignment.
+
+    {%- if not Phone %}
+
+    A REQUEST:
+    To allow communications in case of outages or in urgent cases, please respond to
+    this email with a PHONE NUMBER that can be used to reach you quickly during business
+    hours. This phone number will only be shared with chairs of hearing committees (i.e.
+    CS faculty) and used only by them in connection with academic appeals hearings.
+
+    If you prefer not to provide this information, please also respond saying so.
+    {%- endif -%}
+
+    {{ '' }}
+
+    Once again welcome, and I look forward to working with you.
+    If you have any questions or concerns, do not hesitate to reach out.
+
+    Andreas
