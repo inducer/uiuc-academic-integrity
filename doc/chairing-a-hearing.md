@@ -9,6 +9,7 @@
 * Feb 28, 2024: Add note to “chair’s role” about making sure questions are answered.
 * Mar 20, 2024: Add a note about interacting with third parties.
 * Apr 17, 2024: Clarified expectations on report workflow via Box notes.
+* Sep 15, 2025: Remove the expectation that FAIR reflect who chaired the committee.
 
 See [here](https://github.com/inducer/uiuc-academic-integrity/commits/main/doc/chairing-a-hearing.md) for the full change log.
 
@@ -30,7 +31,7 @@ The rest of this document assumes you have read this.
 * Make sure to read all the case documentation in FAIR. A link should be included in the scheduling email.
   * Make sure you know what is being appealed: finding and sanction, or sanction only.
 * Verify that you are listed as an alternate host on the Zoom meeting. Email Andreas if not.
-* Verify that you are listed as chair in FAIR. Email Andreas if not.
+* Verify that you have access to all relevant case materials in FAIR. (Note that even though you are chair, you will not be listed as such in FAIR. This is to help you avoid hard-to-undo mistakes.)
 * Check for opening statements. These should be in the “Case Documentation” tab in FAIR.
   * Both the instructor and the student may provide them.
   * They could also be in your email. If they are there, make sure they get uploaded to FAIR.
