@@ -10,7 +10,7 @@
 * Mar 20, 2024: Add a note about interacting with third parties.
 * Apr 17, 2024: Clarified expectations on report workflow via Box notes.
 * Sep 15, 2025: Remove the expectation that FAIR reflect who chaired the committee.
-* Oct 6, 2025: Clarify that the NO INFORMATION should *NOT* be entered into the FAIR portal by the chair.
+* Oct 6, 2025: Clarify that NO INFORMATION AT ALL should be entered into the FAIR portal by the chair.
 
 See [here](https://github.com/inducer/uiuc-academic-integrity/commits/main/doc/chairing-a-hearing.md) for the full change log.
 
