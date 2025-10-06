@@ -10,6 +10,7 @@
 * Mar 20, 2024: Add a note about interacting with third parties.
 * Apr 17, 2024: Clarified expectations on report workflow via Box notes.
 * Sep 15, 2025: Remove the expectation that FAIR reflect who chaired the committee.
+* Oct 6, 2025: Clarify that the report should *NOT* be entered into the FAIR portal by the chair.
 
 See [here](https://github.com/inducer/uiuc-academic-integrity/commits/main/doc/chairing-a-hearing.md) for the full change log.
 
@@ -105,7 +106,7 @@ It should be between about a half page and a full page in length, depending on t
 
 Unless you have strong reasons to do otherwise, please use Box’s “notes” feature for authoring and sharing committee reports. Not only does this allow collaborative editing with your committee members, it is also FERPA compliant, unlike sending reports via email.
 
-Once the report is finished and approved, please share it with Andreas (via the built-in “Share” feature) *and* send a separate email to him mentioning that the report is complete and ready for processing. If there are issues with the report, Andreas will provide feedback typically via notes on the report directly in Box, allowing you to address them. Once done, once again please send a quick email to indicate that the revisions have been completed and approved by the committee.
+Once the report is finished and approved, please share it with Andreas (via the built-in “Share” feature) *and* send a separate email to him mentioning that the report is complete and ready for processing. If there are issues with the report, Andreas will provide feedback typically via notes on the report directly in Box, allowing you to address them. Once done, once again please send a quick email to indicate that the revisions have been completed and approved by the committee. **UNDER NO CIRCUMSTANCES** should you enter the report into the FAIR portal, since the student may be able to see it there prior to final review.
 
 While the FAIR portal allows you to do so, **PLEASE DO NOT UNDER ANY CIRCUMSTANCES send the report to the student**.
 
@@ -114,4 +115,3 @@ By the student code, the report is due **within three business days** of the app
 ## Interactions with third parties
 
 It may happen that you are contacted by third parties (e.g. parents, consultants, friends of an appellant) regarding specifics of a FAIR case or hearing.  Should this happen, it is **critically important** that you do not engage.  Do not disclose any information, do not discuss the content of hearings, even if that person was present at the hearing. Instead, please politely refer these folks to Andreas, Elsa, or the academic office.
-
