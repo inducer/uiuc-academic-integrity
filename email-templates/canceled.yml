@@ -63,9 +63,3 @@ insert:
             time()
         Event: |
             "Canceled"
-
-update:
-    table: Cases
-    fields:
-        Hearing_start: None
-
