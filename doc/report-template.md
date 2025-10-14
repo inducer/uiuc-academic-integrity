@@ -56,4 +56,4 @@ based on ground(s) (choose one or more):
 Why did the committee arrive at the decision outlined above? What evidence was considered in doing so? This justification must be based on what is allowed by the student code. Personal preferences or ways in which the committee disagree with the instructor do not matter. Instructors have broad latitude to set course policies within the bounds of the code, and the appeals process may not impinge on this freedom.
 
 > [!NOTE]
-> Your report should not identify commitee member's opinions or votes.
+> Your report should not identify committee member's opinions or votes.
