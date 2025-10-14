@@ -11,6 +11,7 @@
 * Apr 17, 2024: Clarified expectations on report workflow via Box notes.
 * Sep 15, 2025: Remove the expectation that FAIR reflect who chaired the committee.
 * Oct 6, 2025: Clarify that NO INFORMATION AT ALL should be entered into the FAIR portal by the chair.
+* Oct 14, 2025: Revamp "report" section, add report template.
 
 See [here](https://github.com/inducer/uiuc-academic-integrity/commits/main/doc/chairing-a-hearing.md) for the full change log.
 
@@ -38,6 +39,7 @@ The rest of this document assumes you have read this.
   * They could also be in your email. If they are there, make sure they get uploaded to FAIR.
 * Make sure that the class syllabus and the exam/MP instructions are available in the case documentation in FAIR. If they are not, email the instructor to request them.
 * Make a note of who your backup committee members are. Be prepared to contact them on short notice if your hearing committee winds up incomplete. Emails and phone numbers (if available) of your committee are in the chair preparation email you received.
+* Copy the [report template](report-template.md) into a new [Box note][boxnote] and fill out the preliminaries. Share it with your committee members via Box.
 
 ## Running a hearing
 
@@ -74,44 +76,47 @@ The rest of this document assumes you have read this.
   * Make sure to keep the discussion on track. Gently and politely make sure that the discussion is efficient and to the point.
     * If at any point you feel that the student is being lectured by the instructor or a committee member, gently interrupt and steer the discussion in a more productive direction.
 * Dismiss the instructor and the student.
-* Facilitate the discussion during the **closed part of the hearing**. The committee must vote on the following aspects:
-  * whether the appellant had grounds for appeal (**exclusively** one of four possible grounds, see §1‑405c)
-  * whether to uphold or change the finding (if the finding is being appealed)
-    * If changed, state the new finding.
-  * whether to uphold or change the sanction (if the sanction is being appealed)
-    * If changed (i.e. reduced), state the new sanction.
-  * Alternatively, a committee may vote to return the case to an earlier procedural step at which an error occurred.
-    * For example, if it emerges that an instructor has not done a proper investigation, a committee may tell them to do that by returning the case to the finding stage, rather than attempting to carry out an investigation themselves on the spot.
-    * Note that this includes the possibility of a renewed appeal, if deemed necessary by the appellant.
+* Facilitate the discussion during the **closed part of the hearing**. Show the committee members the report template and ask them to help you fill out the "Decision" part.
 
-  Focus the committee’s attention on what they need in order to vote on these aspects. Gently steer them away from discussions that do not help arrive at a vote.
+## Decision and Report
 
-## Possible outcomes of a hearing
+- Please use the [report template](report-template.md).
+- Please [create a Box note][boxnote] for your report and share (via Box) it with the committee. This allows collaborative real-time editing, which may be helpful.
+    - Use of Box lowers the risk of a FERPA violation.
+    - Once finalized, each committee member must leave an approving comment on the Box note.
+- Once all committee members have approved the report, please share (via Box) the report with Andreas and send an email indicating that the report is finished.
 
-Ideally, a hearing should end with a vote on the points described above. If this is not possible, at your discretion, a hearing may be rescheduled for a later time. You may also decide that a break is in order, however note that hearings are scheduled for 90 minutes, and participants may become unavailable beyond this time, so this is challenging in practice.
+> [!WARNING]
+> **UNDER NO CIRCUMSTANCES** should you enter any information about the hearing outcome into the FAIR portal, since the student may be able to see it there prior to final review.
 
-## The report
+> [!WARNING]
+> **UNDER NO CIRCUMSTANCES** should you touch the "Final Decision" tab in FAIR, for any reason.
 
-Must include the following information:
+The committee must decide on the following points:
 
-* A brief summary of the allegation,
-* the committee’s response to the questions above (including a rationale),
-* who attended the hearing,
-* what information was being gathered and considered, and
-* whether the votes were unanimous.
-* If the committee voted that the appellant had grounds for appeal, state which of the four grounds the committee considered applicable.
-* It must justify, based on the information considered, the decision made by the committee.
+-   **Overall ruling**:
 
-It should be between about a half page and a full page in length, depending on the complexity of the case. It is good practice to get it approved by the committee before sending it on.
+    Following paragraph f.6 of [§ 1-405][appealproc], a committee must decide on *exactly* one of the following:
 
-Unless you have strong reasons to do otherwise, please use Box’s “notes” feature for authoring and sharing committee reports. Not only does this allow collaborative editing with your committee members, it is also FERPA compliant, unlike sending reports via email.
+    1.  **Uphold** the instructors decision entirely
+    2.  **Overturn** the instructor’s decision entirely (i.e. find that the student *did not commit*)
+    3.  **Modify** the finding (eg facilitation instead of cheating, or maybe facilitation and cheating) and/or the sanction
+    4.  Or, in the case of a procedural error that likely affected the instructor's arriving at the correct decision, to **roll the process back** to before the the procedural error occur.
 
-Once the report is finished and approved, please share it with Andreas (via the built-in “Share” feature) *and* send a separate email to him mentioning that the report is complete and ready for processing. If there are issues with the report, Andreas will provide feedback typically via notes on the report directly in Box, allowing you to address them. Once done, once again please send a quick email to indicate that the revisions have been completed and approved by the committee. **UNDER NO CIRCUMSTANCES** should you enter any information about the hearing outcome into the FAIR portal, since the student may be able to see it there prior to final review.
+-   **Grounds determination:** The committee must decide whether the student had grounds for appeal on the finding (if appealed) and/or the sanction. Grounds must *exclusively* be drawn from the list of four found in paragraph c of [§ 1-405][appealproc].
 
-While the FAIR portal allows you to do so, **PLEASE DO NOT UNDER ANY CIRCUMSTANCES send the report to the student**.
+-   **Justification:** Why did the committee arrive at the decision outlined above? What evidence was considered in doing so? This justification must be based on what is allowed by the student code. Personal preferences or ways in which the committee disagree with the instructor do not matter. Instructors have broad latitude to set course policies within the bounds of the code, and the appeals process may not impinge on this freedom.
+
+> [!NOTE]
+> A committee absolutely cannot know what has happened in other cases  of academic integrity violation in a course, and you have to trust  that the instructor is handling all findings in a consistent manner; you may only judge if something went wrong in this case.
+
+If it is not possible to nail down these three aspects during the hearing, at your discretion, a hearing may be rescheduled for a later time. You may also decide that a break is in order, however note that hearings are scheduled for 90 minutes, and participants may become unavailable beyond this time, so this is challenging in practice.
 
 By the student code, the report is due **within three business days** of the appeal hearing.
 
 ## Interactions with third parties
 
 It may happen that you are contacted by third parties (e.g. parents, consultants, friends of an appellant) regarding specifics of a FAIR case or hearing.  Should this happen, it is **critically important** that you do not engage.  Do not disclose any information, do not discuss the content of hearings, even if that person was present at the hearing. Instead, please politely refer these folks to Andreas, Elsa, or the academic office.
+
+[appealproc]: https://studentcode.illinois.edu/article1/part4/1-405
+[boxnote]: https://uofi.app.box.com/notes/create_note
