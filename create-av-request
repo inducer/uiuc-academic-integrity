@@ -2,6 +2,7 @@
 
 import datetime
 import os
+from typing import cast
 
 from pygrist_mini import GristClient
 
@@ -14,21 +15,25 @@ def get_current_school_year_id(grist: GristClient) -> int:
 
 
 def create_av_request(args, grist: GristClient) -> int:
-    local_tz = datetime.datetime.now(datetime.UTC).astimezone().tzinfo
     rg_id, = grist.add_records("Availability_request_groups", [{
                       "Description": args.name,
                       "Request_school_year": get_current_school_year_id(grist),
                   }])
 
-    date = args.date
     req_timespans = []
+    date = cast(datetime.date, args.date)
     for _n in range(args.days):
         req_timespans.append({
                  "Request_group": rg_id,
+
+                 # Create datetimes from scratch as local datetimes. Pre-obtaining
+                 # a shared tzinfo is incorrect because it incorporates the DST offset,
+                 # which may change from one day to the next.
                  "Start": datetime.datetime.combine(
-                                date, datetime.time(9), tzinfo=local_tz).timestamp(),
+                            date, datetime.time(9)).astimezone(None).timestamp(),
                  "End": datetime.datetime.combine(
-                                date, datetime.time(17), tzinfo=local_tz).timestamp(),
+                            date, datetime.time(17)).astimezone(None).timestamp(),
+
                  "Allow_partial": True,
              })
         date = date + datetime.timedelta(days=1)
