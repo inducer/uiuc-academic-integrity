@@ -3,4 +3,4 @@
 set -eo pipefail
 
 ./outlook.sh update-hearing "$@"
-( ./mail.sh ./save-the-date.yml "$@" )
+( mmrg ./save-the-date.yml "$@" )
