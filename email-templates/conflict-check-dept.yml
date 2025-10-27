@@ -29,7 +29,7 @@ cc:
 
 subject: |
 
-    Conflict Check: {{ Full_name }} for FAIR{{ CaseID }} [NEW PROCESS]
+    Conflict Check: {{ Full_name }} for FAIR{{ CaseID }}
 
 body: |
 
@@ -41,7 +41,7 @@ body: |
 
     {{ Appellants }}
 
-    NEW: Please use the following link to report this information:
+    Please use the following link to report this information:
 
     https://scicomp-apps.cs.illinois.edu/form/conflict/{{ inserted_Conflict_reports_0_Key }}
 
