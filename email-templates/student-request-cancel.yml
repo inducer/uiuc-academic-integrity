@@ -43,8 +43,6 @@ body: |
 
     {% endif -%}
 
-    The hearing was previously scheduled for {{ Hearing_start | format_timestamp("%B %d %I:%M %p") }}.
-
     Andreas
 
 insert:
