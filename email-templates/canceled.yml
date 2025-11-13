@@ -36,8 +36,7 @@ body: |
 
     All,
 
-    Unfortunately, the hearing for FAIR{{ CaseID }} will have
-    to be canceled for the moment.
+    The hearing for FAIR{{ CaseID }} is canceled.
 
     {% if Notes_for_schedule_email -%}
     IMPORTANT:
@@ -47,7 +46,7 @@ body: |
 
     {% endif -%}
 
-    You will receive word in the near future regarding
+    If necessary, you will receive word in the near future regarding
     a rescheduled time.
 
     Andreas
