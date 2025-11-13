@@ -3,5 +3,5 @@
 set -eo pipefail
 
 ./outlook.sh update-hearing "$@"
-( ./mail.sh ./chair-prep.yml "$@" )
-( ./mail.sh ./scheduled.yml "$@" )
+( mmrg ./chair-prep.yml "$@" )
+( mmrg ./scheduled.yml "$@" )

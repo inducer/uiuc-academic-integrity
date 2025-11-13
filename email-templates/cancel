@@ -2,5 +2,5 @@
 
 set -eo pipefail
 
-( ./mail.sh ./canceled.yml "$@" )
+( mmrg ./canceled.yml "$@" )
 ./outlook.sh update-hearing "$@"
