@@ -1,9 +1,17 @@
-#! /usr/bin/env python3
+#!/usr/bin/env -S uv run --script
+#
+# /// script
+# dependencies = [
+#   "pygrist-mini",
+#   "typed-argparse",
+# ]
+# ///
 
 import datetime
 import os
-from typing import cast
+from collections.abc import Mapping
 
+import typed_argparse as tap
 from pygrist_mini import GristClient
 
 
@@ -14,14 +22,109 @@ def get_current_school_year_id(grist: GristClient) -> int:
     return year["id"]
 
 
-def create_av_request(args, grist: GristClient) -> int:
+class CommonArgs(tap.TypedArgs):
+    grist_root_url: str = tap.arg(metavar="URL")
+    grist_doc_id: str = tap.arg(metavar="DOC_ID")
+    grist_api_key: str = tap.arg(
+                    metavar="FILENAME",
+                    default=os.path.expanduser("~/.grist-api-key"))
+
+
+class CreateArgs(CommonArgs):
+    name: str = tap.arg(positional=True)
+    date: str = tap.arg(positional=True)
+
+    days: int = tap.arg("-d", default=5)
+
+
+class UpdateArgs(CommonArgs):
+    request_group_id: int = tap.arg(positional=True)
+
+
+def get_grist_client(args: CommonArgs) -> GristClient:
+    with open(args.grist_api_key) as inf:
+        grist_api_key = inf.read().strip()
+
+    return GristClient(args.grist_root_url, grist_api_key, args.grist_doc_id)
+
+
+class GetOrCreateAvRequest:
+    grist: GristClient
+    request_group_id: int
+    person_to_avreq: dict[int, int]
+
+    def __init__(self, grist: GristClient, request_group_id: int):
+        self.grist = grist
+        self.request_group_id = request_group_id
+        self.person_to_avreq = {
+            rec["fields"]["Person"]: rec["id"]
+            for rec in grist.get_records("Availability_requests",
+                              filter={"Request_group": [request_group_id]})
+        }
+
+    def __call__(self, person_id: int) -> int:
+        try:
+            return self.person_to_avreq[person_id]
+        except KeyError:
+            avreq = {"Request_group": self.request_group_id, "Person": person_id}
+            avreq_id, = self.grist.add_records("Availability_requests", [avreq])
+            self.person_to_avreq[person_id] = avreq_id
+            return avreq_id
+
+
+def to_filter(row: Mapping[str, object]) -> dict[str, list[object]]:
+    return {name: [value] for name, value in row.items()}
+
+
+def complete_case_based_requests(grist: GristClient, rg_id: int):
+    get_or_create_av_req = GetOrCreateAvRequest(grist, rg_id)
+
+    open_cases = [
+        (row["id"], row["CaseID"]) for row
+        in grist.sql(
+                "select id, CaseID from Cases"
+                " where cast(substr(State, 1, 1) as int) >= 5"
+            )
+    ]
+
+    for case, fair_case_id in open_cases:
+        principals = [
+            (row["Person"], row["Role"]) for row
+            in grist.sql(
+                    "select Person, Role from Case_participants"
+                    f' where "Case" = { case }'
+                    " and Role in ('Appellant', 'Instructor')"
+                )
+        ]
+
+        for pid, _role in principals:
+            avreq_id = get_or_create_av_req(pid)
+            for cpid, crole in principals:
+                if pid == cpid:
+                    continue
+
+                contextual_req_data = {
+                            "Request": avreq_id,
+                            "Contextual_request": get_or_create_av_req(cpid),
+                }
+                if not grist.get_records("Contextual_availability_requests",
+                                  filter=to_filter(contextual_req_data)):
+                    grist.add_records("Contextual_availability_requests", [{
+                                **contextual_req_data,
+                                "Context": f"{crole} (Case {fair_case_id})",
+                            }])
+
+
+def create_av_request(args: CreateArgs):
+    grist = get_grist_client(args)
+
     rg_id, = grist.add_records("Availability_request_groups", [{
                       "Description": args.name,
                       "Request_school_year": get_current_school_year_id(grist),
                   }])
 
     req_timespans = []
-    date = cast(datetime.date, args.date)
+    date = datetime.datetime.strptime(args.date, "%Y-%m-%d").date()
     for _n in range(args.days):
         req_timespans.append({
                  "Request_group": rg_id,
@@ -49,84 +152,26 @@ def create_av_request(args, grist: GristClient) -> int:
             )
     ]
 
-    person_to_avreq = {}
-
-    def get_avreq(person_id: int) -> int:
-        try:
-            return person_to_avreq[person_id]
-        except KeyError:
-            avreq = {"Request_group": rg_id, "Person": person_id}
-            avreq_id, = grist.add_records("Availability_requests", [avreq])
-            person_to_avreq[person_id] = avreq_id
-            return avreq_id
+    get_or_create_av_req = GetOrCreateAvRequest(grist, rg_id)
 
     for pid in committee:
-        get_avreq(pid)
+        get_or_create_av_req(pid)
 
-    open_cases = [
-        (row["id"], row["CaseID"]) for row
-        in grist.sql(
-                "select id, CaseID from Cases"
-                " where cast(substr(State, 1, 1) as int) >= 5"
-            )
-    ]
+    complete_case_based_requests(grist, rg_id)
 
-    for case, fair_case_id in open_cases:
-        principals = [
-            (row["Person"], row["Role"]) for row
-            in grist.sql(
-                    "select Person, Role from Case_participants"
-                    f' where "Case" = { case }'
-                    " and Role in ('Appellant', 'Instructor')"
-                )
-        ]
 
-        for pid, _role in principals:
-            avreq_id = get_avreq(pid)
-            grist.add_records("Contextual_availability_requests", [
-                    {
-                        "Request": avreq_id,
-                        "Context": f"{crole} (Case {fair_case_id})",
-                        "Contextual_request": get_avreq(cpid)
-                    }
-                    for cpid, crole in principals
-                    if pid != cpid
-                ])
-
-    return 0
+def update_av_request(args: UpdateArgs):
+    grist = get_grist_client(args)
+    complete_case_based_requests(grist, args.request_group_id)
 
 
 def main():
-    from argparse import ArgumentParser
-    parser = ArgumentParser()
-
-    parser.add_argument(
-                        "--grist-root-url", metavar="URL",
-                        required=True)
-    parser.add_argument(
-                        "--grist-doc-id", metavar="DOC_ID",
-                        required=True)
-    parser.add_argument(
-                        "--grist-api-key", metavar="FILENAME",
-                        default=os.path.expanduser("~/.grist-api-key"),
-                        required=True)
-
-    parser.add_argument("name")
-    parser.add_argument("date",
-            type=lambda s: datetime.datetime.strptime(s, "%Y-%m-%d").date())
-
-    parser.add_argument("-d", "--days", type=int, default=5)
-
-    parser.add_argument("-n", "--dry-run", action="store_true")
-
-    args = parser.parse_args()
-    with open(args.grist_api_key) as inf:
-        grist_api_key = inf.read().strip()
-
-    grist_client = GristClient(args.grist_root_url, grist_api_key, args.grist_doc_id)
-
-    import sys
-    sys.exit(create_av_request(args, grist_client))
+    tap.Parser(
+        tap.SubParserGroup(
+            tap.SubParser("create", CreateArgs),
+            tap.SubParser("update", UpdateArgs),
+            common_args=CommonArgs,
+        )).bind(create_av_request, update_av_request).run()
 
 
 if __name__ == "__main__":
