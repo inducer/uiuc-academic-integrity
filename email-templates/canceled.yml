@@ -15,13 +15,16 @@ to:
     semicolon_separated: true
 
 cc:
-- 
+-
     name: Andreas Kloeckner
     email: andreask@illinois.edu
-- 
+-
     name: Heather Zike
     email: hlzike@illinois.edu
-- 
+-
+    name: Natalie Heath
+    email: heat@illinois.edu
+-
     name: Elsa Gunter
     email: egunter@illinois.edu
 

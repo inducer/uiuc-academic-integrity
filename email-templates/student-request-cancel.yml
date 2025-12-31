@@ -12,14 +12,17 @@ query: |
     where CaseID = {{case_id}}
 
 to:
-- 
-    name: Heather Zike
-    email: hlzike@illinois.edu
 
-cc:
 - 
+    name: Natalie Heath
+    email: heat@illinois.edu
+cc:
+-
     name: Andreas Kloeckner
     email: andreask@illinois.edu
+-
+    name: Heather Zike
+    email: hlzike@illinois.edu
 
 subject: |
 
@@ -27,7 +30,7 @@ subject: |
 
 body: |
 
-    Hi Heather,
+    Hi Natalie (cc Heather),
 
     I will no longer need student committee members for FAIR{{ CaseID }}
     for now, as the hearing will need to be rescheduled. I will be in touch

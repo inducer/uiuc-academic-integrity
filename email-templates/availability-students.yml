@@ -30,6 +30,9 @@ cc:
 -
     name: Heather Zike
     email: hlzike@illinois.edu
+-
+    name: Natalie Heath
+    email: heat@illinois.edu
 
 subject: |
     Availability for Academic Integrity Hearings: {{ Request_group_description }}
