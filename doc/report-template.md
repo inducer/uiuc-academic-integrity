@@ -1,5 +1,9 @@
 # FAIR Hearing Report Template
 
+## Change log
+
+- Jan 3, 2026: Fix list of possible finding grounds (add 'n/a', remove 'sanctions')
+
 ## Preliminaries
 
 - Date and time:
