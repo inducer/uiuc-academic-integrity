@@ -41,8 +41,8 @@ The student had grounds to appeal the finding : YES | NO (if appealed)
 based on ground(s) (choose one or more):
 - PROCEDURE WAS NOT FOLLOWED (1)
 - CONFLICT OF INTEREST/BIAS (2)
-- SANCTIONS NOT APPROPRIATE (3)
 - NEW INFORMATION emerged after instructor's decision (4)
+- N/A (finding not being appealed)
 
 The student had grounds to appeal the sanction: YES | NO (if appealed)
 based on ground(s) (choose one or more):
