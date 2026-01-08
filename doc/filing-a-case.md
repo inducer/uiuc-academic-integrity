@@ -194,5 +194,7 @@ In larger classes, the first suspicion is often raised by a member of your cours
 - [College of LAS summary on Academic Integrity](https://las.illinois.edu/academics/integrity). Accessed Aug 26, 2025.
 - [UIUC Student Code, Article 1, Part 4](https://studentcode.illinois.edu/article1/part4). Accessed Aug 26, 2025.
 - [Provost's Quick Reference Guide][provost]
+- [FAIR quick reference guide](fairguide)
 
 [provost]: https://provost.illinois.edu/policies/policies/academic-integrity/instructors-quick-reference-guide-to-academic-integrity/
+[fairguide]: https://my.siebelschool.illinois.edu/fair/documentation/Appeal-Guide.pdf
