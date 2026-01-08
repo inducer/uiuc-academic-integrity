@@ -72,7 +72,7 @@ The rest of this document assumes you have read this.
   * Allow an opening statement from the instructor, if applicable. If present, they will present it, otherwise you will read it. (“prosecution goes first”)
   * Allow an opening statement from the student, if applicable. If present, they will present it, otherwise you will read it.
 * Facilitate the discussion during the **open part of the hearing**:
-  * The committee members will take turns asking questions of the student and the instructor.
+  * The committee members will take turns asking fact finding questions of the student and the instructor.
   * Instructor and student may ask questions of each other, through you.
   * You may reject a question if it has already been answered, is irrelevant, or is inappropriate. You may reword questions before they are answered if they are confusing or intended to disparage, intimidate, or otherwise harass the individual being questioned.
   * Once the committee has no further questions, state that the open part of the meeting is ending.
