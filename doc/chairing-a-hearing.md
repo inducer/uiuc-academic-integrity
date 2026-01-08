@@ -12,6 +12,7 @@
 * Sep 15, 2025: Remove the expectation that FAIR reflect who chaired the committee.
 * Oct 6, 2025: Clarify that NO INFORMATION AT ALL should be entered into the FAIR portal by the chair.
 * Oct 14, 2025: Revamp "report" section, add report template.
+* Jan 8, 2026: Improve wording around recording (ask consent, move before call to order, recommend notes).
 
 See [here](https://github.com/inducer/uiuc-academic-integrity/commits/main/doc/chairing-a-hearing.md) for the full change log.
 
@@ -45,7 +46,6 @@ The rest of this document assumes you have read this.
 
 * Join the Zoom meeting a few minutes early. Enable video (see below).
   * All hearing Zooms should be configured to have a waiting room. It is your job to admit participants. Only admit those who have a reason to be there.
-* You may wish to record the hearing and/or produce an automated transcript. Make sure that only you have access.
 * Verify that a full committee is present. (two voting faculty, one voting student member) Never start a hearing with an incomplete committee.
   * If the committee is incomplete, quickly contact backup members and wait for them to join.
 * Instructor and student *may* be present, but they are not required to be. Wait a few minutes if they are not present, then proceed.
@@ -53,6 +53,9 @@ The rest of this document assumes you have read this.
 * Offer to turn on automatic closed captioning. Students with disabilities have a right to ask for this. Non-native speakers may benefit from it.
 * Request that all participants turn on video, to ensure the confidentiality of the hearing. Be somewhat insistent here, but continue even if the request is not successful.
 * Make a note of everyone who is present, to facilitate report writing later.
+* You may wish to record the hearing and/or produce an automated transcript.
+  * Ask everyone present whether they consent to recording, noting that all co-hosts (chair and faculty committee members) will have access to the recording.
+  * If someone declines to consent, keep written notes instead. (You may want to keep *some* written notes in any case.)
 * Call the hearing to order.
   State the purpose of the hearing, including the case number.
   * Put the link to the FAIR case in the Zoom chat for everyone to refer to.
