@@ -52,6 +52,15 @@ body: |
     sure to make note of any changes since the last time
     you reviewed it.
 
+    The FAIR system provides a template, at this URL:
+
+    https://my.siebelschool.illinois.edu/fair/documentation/Appeal-Script.asp?{{ CaseID }}
+
+    This may be useful because it automatically collects relevant
+    information in one place. You may reference this, but please
+    follow the script in the CS documentation, since it is reflects
+    more precise information specific to CS.
+
     --------------------------------------------------
     
     As a reminder: The hearing will take place at
