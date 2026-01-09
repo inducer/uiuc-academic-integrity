@@ -37,3 +37,17 @@ multiline-quotes = "double"
 [tool.ruff.lint.isort]
 combine-as-imports = true
 lines-after-imports = 2
+
+[tool.basedpyright]
+include = [
+    "**/*.py",
+    "av-request",
+    "update-outlook",
+    # "hearing-slot",
+]
+reportImplicitStringConcatenation = "none"
+reportUnnecessaryIsInstance = "none"
+reportUnusedCallResult = "none"
+reportExplicitAny = "none"
+reportUnreachable = "hint"
+reportAny = "none"
