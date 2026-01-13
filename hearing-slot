@@ -1,0 +1,241 @@
+#!/usr/bin/env -S uv run --script
+# requires-python = ">=3.13"
+# /// script
+# dependencies = [
+#   "pygrist-mini",
+#   "typed-argparse",
+# ]
+# ///
+
+import datetime
+import os
+from collections import defaultdict
+from collections.abc import Collection, Mapping, Sequence
+from dataclasses import dataclass
+from enum import IntEnum, StrEnum
+from typing import TypeVar, cast
+
+import typed_argparse as tap
+from pygrist_mini import GristClient
+
+
+class CommonArgs(tap.TypedArgs):
+    grist_root_url: str = tap.arg(metavar="URL")
+    grist_doc_id: str = tap.arg(metavar="DOC_ID")
+    grist_api_key: str = tap.arg(
+                    metavar="FILENAME",
+                    default=os.path.expanduser("~/.grist-api-key"))
+
+
+def get_grist_client(args: CommonArgs) -> GristClient:
+    with open(args.grist_api_key) as inf:
+        grist_api_key = inf.read().strip()
+
+    return GristClient(args.grist_root_url, grist_api_key, args.grist_doc_id)
+
+
+class FindArgs(CommonArgs):
+    request_group_id: int = tap.arg(positional=True)
+    timezone: str | None = tap.arg(default=None)
+
+
+class AvCategory(StrEnum):
+    committee = "committee"
+    core = "core"
+
+
+class PersonCategory(StrEnum):
+    chair = "Committee Chair"
+    student_ugrad = "Student (undergrad)"
+    student_grad = "Student (graduate)"
+    faculty = "Faculty"
+    faculty_emerg = "Faculty for Emergencies"
+    committee = "Faculty on Committee"
+    committee_leave = "Faculty on Committee on Leave"
+    other = "Other"
+
+
+@dataclass(frozen=True)
+class Timespan:
+    start: datetime.datetime
+    end: datetime.datetime
+
+
+IdentifierT = TypeVar("IdentifierT")
+
+
+@dataclass(frozen=True)
+class Overlap[IdentifierT]:
+    span: Timespan
+    counts: Mapping[IdentifierT, int]
+
+
+class TimeType(IntEnum):
+    # This ensures that ends sort before starts, so that we don't get
+    # 'fake' overlaps when ends coincide with starts.
+    end = 0
+    start = 1
+
+
+def timespans_to_overlaps[IdentifierT](
+            ids_and_spans: Sequence[tuple[IdentifierT, Timespan]]
+        ) -> Sequence[Overlap[IdentifierT]]:
+    all_spans = sorted(
+        [(time, what, identifier)
+            for identifier, span in ids_and_spans
+            for what, time in [(TimeType.start, span.start), (TimeType.end, span.end)]
+        ],
+    )
+
+    identifiers = {identifier for identifier, _span in ids_and_spans}
+    result: list[Overlap[IdentifierT]] = []
+    cur_counts = dict.fromkeys(identifiers, 0)
+    last_time = None
+
+    for time, what, identifier in all_spans:
+        cur_counts[identifier] = (
+            cur_counts.get(identifier, 0)
+                + (1 if what == TimeType.start else -1))
+        if cur_counts[identifier] == 0:
+            del cur_counts[identifier]
+
+        if last_time is not None:
+            result.append(
+                Overlap(Timespan(start=last_time, end=time), counts=cur_counts.copy())
+            )
+        last_time = time
+
+    assert not cur_counts
+
+    return result
+
+
+@dataclass(frozen=True)
+class Case:
+    id: int
+    fair_id: int
+    appellants: Sequence[int]
+    instructors: Sequence[int]
+
+
+def get_case_participants(grist: GristClient, case_id: int, role: str) -> list[int]:
+    return [row["Person"]
+        for row in grist.sql(
+            "select Person from Case_participants "
+            f'where "Case" = {case_id} '
+            f"and Role = '{role}'"
+        )]
+
+
+def av_category_counts(counts: Mapping[int, int], core_persons: Collection[int]):
+    cat_counts: defaultdict[AvCategory, int] = defaultdict(int)
+    for p, cnt in counts.items():
+        cat = AvCategory.core if p in core_persons else AvCategory.committee
+        cat_counts[cat] = cat_counts.get(cat, 0) + cnt
+    return cat_counts
+
+
+K = TypeVar("K")
+
+
+def min_counts(a: Mapping[K, int], b: Mapping[K, int]):
+    result: dict[K, int] = {}
+    for k, a_cnt in a.items():
+        cnt = min(a_cnt, b.get(k, 0))
+        if cnt:
+            result[k] = cnt
+    return result
+
+
+def cat_counts_valid(cat_counts: Mapping[AvCategory, int], n_core_persons: int):
+    return (cat_counts[AvCategory.committee] >= 3
+                        and cat_counts[AvCategory.core] >= n_core_persons)
+
+
+def find_slots(args: FindArgs):
+    grist = get_grist_client(args)
+
+    availabilities: list[tuple[int, Timespan]] = [
+            (row["Person"], Timespan(
+                    start=datetime.datetime.fromtimestamp(row["Start"]),
+                    end=datetime.datetime.fromtimestamp(row["End"]),
+                )
+        )
+        for row in grist.sql(
+                "select Person, Person_category, Start, End "
+                "from Availability "
+                f"where Available = 1 and Request_group = {args.request_group_id}")
+        ]
+    person_to_category = {
+        cast(int, row["id"]): PersonCategory(row["Category"])
+        for row in grist.sql(
+                "select id, Category "
+                "from Persons")
+    }
+    person_to_netid = {
+        cast(int, row["id"]): cast("str", row["NetID"])
+        for row in grist.sql(
+                "select id, NetID "
+                "from Persons")
+    }
+    cases_with_need = [
+            Case(
+                 id=row["id"],
+                 fair_id=int(row["CaseID"]),
+                 appellants=get_case_participants(
+                                    grist, row["id"], "Appellant"),
+                 instructors=get_case_participants(
+                                    grist, row["id"], "Instructor"),
+
+             )
+            for row in grist.sql(
+                "select id, CaseID from Cases where substr(State, 1, 1) = '5'")]
+
+    committee_spans = [
+        (person, span) for person, span in availabilities
+        if person_to_category[person] == PersonCategory.committee
+    ]
+    for case in cases_with_need:
+        core_persons = [*case.appellants, *case.instructors]
+        overlaps = timespans_to_overlaps([
+            *[(person, span)
+                for person, span in availabilities
+                if person in core_persons],
+            *committee_spans,
+        ],)
+
+        print(f"Case {case.fair_id}:")
+        for i, ov in enumerate(overlaps):
+            cat_counts = av_category_counts(ov.counts, core_persons)
+
+            if cat_counts_valid(cat_counts, len(core_persons)):
+                hearing_end = ov.span.start + datetime.timedelta(minutes=90)
+                forward_i = i + 1
+                min_person_counts = ov.counts
+                while True:
+                    forward_ov = overlaps[forward_i]
+                    if forward_ov.span.start >= hearing_end:
+                        break
+
+                    min_person_counts = min_counts(
+                        min_person_counts,
+                        ov.counts,
+                    )
+                    forward_i += 1
+
+                min_cat_counts = av_category_counts(min_person_counts, core_persons)
+                if cat_counts_valid(min_cat_counts, len(core_persons)):
+                    committee_netids = sorted([
+                        person_to_netid[p]
+                        for p in min_person_counts if p not in core_persons])
+                    print(f"    {ov.span.start}: {', '.join(committee_netids)}")
+
+
+def main():
+    tap.Parser(
+        FindArgs
+        ).bind(find_slots).run()
+
+
+if __name__ == "__main__":
+    main()

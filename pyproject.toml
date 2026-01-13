@@ -43,7 +43,7 @@ include = [
     "**/*.py",
     "av-request",
     "update-outlook",
-    # "hearing-slot",
+    "hearing-slot",
 ]
 reportImplicitStringConcatenation = "none"
 reportUnnecessaryIsInstance = "none"
