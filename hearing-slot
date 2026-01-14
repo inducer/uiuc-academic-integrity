@@ -87,22 +87,24 @@ def timespans_to_overlaps[IdentifierT](
         ],
     )
 
-    identifiers = {identifier for identifier, _span in ids_and_spans}
     result: list[Overlap[IdentifierT]] = []
-    cur_counts = dict.fromkeys(identifiers, 0)
+    cur_counts: dict[IdentifierT, int] = {}
     last_time = None
 
     for time, what, identifier in all_spans:
+        if last_time is not None:
+            if last_time != time:
+                result.append(
+                    Overlap(
+                            Timespan(start=last_time, end=time),
+                            counts=cur_counts.copy())
+                )
         cur_counts[identifier] = (
             cur_counts.get(identifier, 0)
                 + (1 if what == TimeType.start else -1))
         if cur_counts[identifier] == 0:
             del cur_counts[identifier]
 
-        if last_time is not None:
-            result.append(
-                Overlap(Timespan(start=last_time, end=time), counts=cur_counts.copy())
-            )
         last_time = time
 
     assert not cur_counts
@@ -147,9 +149,38 @@ def min_counts(a: Mapping[K, int], b: Mapping[K, int]):
     return result
 
 
-def cat_counts_valid(cat_counts: Mapping[AvCategory, int], n_core_persons: int):
-    return (cat_counts[AvCategory.committee] >= 3
-                        and cat_counts[AvCategory.core] >= n_core_persons)
+def min_counts_until[IdentifierT](
+            overlaps: Sequence[Overlap[IdentifierT]],
+            i: int,
+            until: datetime.datetime) -> Mapping[IdentifierT, int]:
+    ov = overlaps[i]
+    cur_span_end = ov.span.end
+    min_id_counts = ov.counts
+    forward_i = i + 1
+    valid = False
+    while forward_i < len(overlaps):
+        forward_ov = overlaps[forward_i]
+        if forward_ov.span.start != cur_span_end:
+            # no contiguous block until 'until'
+            break
+
+        min_id_counts = min_counts(
+            min_id_counts,
+            forward_ov.counts,
+        )
+        cur_span_end = forward_ov.span.end
+        if cur_span_end >= until:
+            valid = True
+            break
+
+        forward_i += 1
+        if forward_i >= len(overlaps):
+            break
+
+    if valid:
+        return min_id_counts
+    else:
+        return {}
 
 
 def find_slots(args: FindArgs):
@@ -201,33 +232,35 @@ def find_slots(args: FindArgs):
             *[(person, span)
                 for person, span in availabilities
                 if person in core_persons],
-            *committee_spans,
+            *[(person, span)
+                for person, span in committee_spans
+                if person not in core_persons],
         ],)
 
         print(f"Case {case.fair_id}:")
+
         for i, ov in enumerate(overlaps):
+            assert all(cnt == 1 for cnt in ov.counts.values())
+
             cat_counts = av_category_counts(ov.counts, core_persons)
 
-            if cat_counts_valid(cat_counts, len(core_persons)):
-                hearing_end = ov.span.start + datetime.timedelta(minutes=90)
-                forward_i = i + 1
-                min_person_counts = ov.counts
-                while True:
-                    forward_ov = overlaps[forward_i]
-                    if forward_ov.span.start >= hearing_end:
-                        break
+            if (cat_counts[AvCategory.committee] >= 3
+                        and cat_counts[AvCategory.core] >= len(core_persons)):
+                min_person_counts_open = min_counts_until(
+                        overlaps, i, ov.span.start + datetime.timedelta(minutes=60))
+                min_person_counts_closed = min_counts_until(
+                        overlaps, i, ov.span.start + datetime.timedelta(minutes=90))
 
-                    min_person_counts = min_counts(
-                        min_person_counts,
-                        ov.counts,
-                    )
-                    forward_i += 1
+                min_cat_counts_open = av_category_counts(
+                        min_person_counts_open, core_persons)
+                min_cat_counts_closed = av_category_counts(
+                        min_person_counts_closed, core_persons)
 
-                min_cat_counts = av_category_counts(min_person_counts, core_persons)
-                if cat_counts_valid(min_cat_counts, len(core_persons)):
+                if (min_cat_counts_closed[AvCategory.committee] >= 3
+                        and min_cat_counts_open[AvCategory.core] >= len(core_persons)):
                     committee_netids = sorted([
                         person_to_netid[p]
-                        for p in min_person_counts if p not in core_persons])
+                        for p in min_person_counts_closed if p not in core_persons])
                     print(f"    {ov.span.start}: {', '.join(committee_netids)}")
 
 
