@@ -37,6 +37,9 @@ def get_grist_client(args: CommonArgs) -> GristClient:
 class FindArgs(CommonArgs):
     request_group_id: int = tap.arg(positional=True)
     timezone: str | None = tap.arg(default=None)
+    case: int | None = tap.arg(default=None)
+    without_appellant: bool = tap.arg(default=False)
+    without_instructor: bool = tap.arg(default=False)
 
 
 class AvCategory(StrEnum):
@@ -227,7 +230,15 @@ def find_slots(args: FindArgs):
         if person_to_category[person] == PersonCategory.committee
     ]
     for case in cases_with_need:
-        core_persons = [*case.appellants, *case.instructors]
+        if args.case is not None and args.case != case.fair_id:
+            continue
+
+        core_persons: list[int] = []
+        if not args.without_appellant:
+            core_persons = [*core_persons, *case.appellants]
+        if not args.without_instructor:
+            core_persons = [*core_persons, *case.instructors]
+
         overlaps = timespans_to_overlaps([
             *[(person, span)
                 for person, span in availabilities
