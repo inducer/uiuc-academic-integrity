@@ -10,6 +10,7 @@
 import datetime
 import os
 from collections.abc import Mapping
+from pathlib import Path
 
 import typed_argparse as tap
 from pygrist_mini import GristClient
@@ -42,9 +43,7 @@ class UpdateArgs(CommonArgs):
 
 
 def get_grist_client(args: CommonArgs) -> GristClient:
-    with open(args.grist_api_key) as inf:
-        grist_api_key = inf.read().strip()
-
+    grist_api_key = Path(args.grist_api_key).read_text().strip()
     return GristClient(args.grist_root_url, grist_api_key, args.grist_doc_id)
 
 
