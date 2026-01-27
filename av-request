@@ -37,9 +37,13 @@ class CreateArgs(CommonArgs):
 
     days: int = tap.arg("-d", default=5)
 
+    cases: list[int] | None = tap.arg("-c", default=None)
+
 
 class UpdateArgs(CommonArgs):
     request_group_id: int = tap.arg(positional=True)
+
+    cases: list[int] | None = tap.arg("-c", default=None)
 
 
 def get_grist_client(args: CommonArgs) -> GristClient:
@@ -75,7 +79,10 @@ def to_filter(row: Mapping[str, object]) -> dict[str, list[object]]:
     return {name: [value] for name, value in row.items()}
 
 
-def complete_case_based_requests(grist: GristClient, rg_id: int):
+def complete_case_based_requests(
+            grist: GristClient,
+            rg_id: int,
+            cases: list[int] | None):
     get_or_create_av_req = GetOrCreateAvRequest(grist, rg_id)
 
     open_cases = [
@@ -87,6 +94,9 @@ def complete_case_based_requests(grist: GristClient, rg_id: int):
     ]
 
     for case, fair_case_id in open_cases:
+        if cases is not None and fair_case_id not in cases:
+            continue
+
         principals = [
             (row["Person"], row["Role"]) for row
             in grist.sql(
@@ -156,12 +166,12 @@ def create_av_request(args: CreateArgs):
     for pid in committee:
         get_or_create_av_req(pid)
 
-    complete_case_based_requests(grist, rg_id)
+    complete_case_based_requests(grist, rg_id, args.cases)
 
 
 def update_av_request(args: UpdateArgs):
     grist = get_grist_client(args)
-    complete_case_based_requests(grist, args.request_group_id)
+    complete_case_based_requests(grist, args.request_group_id, args.cases)
 
 
 def main():
