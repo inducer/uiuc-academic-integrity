@@ -13,6 +13,7 @@
 * Oct 6, 2025: Clarify that NO INFORMATION AT ALL should be entered into the FAIR portal by the chair.
 * Oct 14, 2025: Revamp "report" section, add report template.
 * Jan 8, 2026: Improve wording around recording (ask consent, move before call to order, recommend notes).
+* Feb 3, 2026: Add notes about transcript availability in Zoom (h/t Margaret Fleck).
 
 See [here](https://github.com/inducer/uiuc-academic-integrity/commits/main/doc/chairing-a-hearing.md) for the full change log.
 
@@ -56,6 +57,7 @@ The rest of this document assumes you have read this.
 * You may wish to record the hearing and/or produce an automated transcript.
   * Ask everyone present whether they consent to recording, noting that all co-hosts (chair and faculty committee members) will have access to the recording.
   * If someone declines to consent, keep written notes instead. (You may want to keep *some* written notes in any case.)
+  * It appears that a transcript is automatically created and available from the transcript option.
 * Call the hearing to order.
   State the purpose of the hearing, including the case number.
   * Put the link to the FAIR case in the Zoom chat for everyone to refer to.
@@ -80,6 +82,7 @@ The rest of this document assumes you have read this.
     * If at any point you feel that the student is being lectured by the instructor or a committee member, gently interrupt and steer the discussion in a more productive direction.
 * Dismiss the instructor and the student.
 * Facilitate the discussion during the **closed part of the hearing**. Show the committee members the report template and ask them to help you fill out the "Decision" part.
+* Before you leave the hearing Zoom room, make sure to download the transcript for future reference.
 
 ## Decision and Report
 
