@@ -31,11 +31,11 @@ def advance_deadline(
         deadline = None
     else:
         min_bump = existing_days
-        deadline = datetime.datetime.fromtimestamp(old_deadline)
+        deadline = datetime.datetime.fromtimestamp(old_deadline)  # noqa: DTZ006
 
     min_deadline = datetime_by_adding_business_days(
         datetime.datetime.combine(
-            datetime.date.today(),
+            datetime.date.today(),  # noqa: DTZ011
             datetime.time(17, 0)),
         min_bump)
 
