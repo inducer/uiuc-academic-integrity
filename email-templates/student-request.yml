@@ -40,10 +40,11 @@ body: |
 
     The appellant(s) for this hearing are: {{ Appellants }}
 
-    {% if Notes -%}
+    {% if Notes or Notes_for_schedule_email -%}
     Some notes about this appeal:
     ---------------------------------------------------------------
     {{ Notes }}
+    {{ Notes_for_schedule_email }}
     ---------------------------------------------------------------
 
     {% endif -%}
