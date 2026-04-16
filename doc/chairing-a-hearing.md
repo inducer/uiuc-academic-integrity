@@ -122,7 +122,7 @@ By the student code, the report is due **within three business days** of the app
 
 ## Interactions with third parties
 
-It may happen that you are contacted by third parties (e.g. parents, consultants, friends of an appellant) regarding specifics of a FAIR case or hearing.  Should this happen, it is **critically important** that you do not engage.  Do not disclose any information, do not discuss the content of hearings, even if that person was present at the hearing. Instead, please politely refer these folks to Andreas, Elsa, or the academic office.
+It may happen that you are contacted by third parties (e.g. parents, consultants, friends of an appellant) regarding specifics of a FAIR case or hearing.  Should this happen, it is **critically important** that you do not engage.  Do not disclose any information, do not discuss the content of hearings, even if that person was present at the hearing. Instead, please politely refer these folks to Andreas, Eric, or the academic office.
 
 [appealproc]: https://studentcode.illinois.edu/article1/part4/1-405
 [boxnote]: https://uofi.app.box.com/notes/create_note

@@ -12,11 +12,14 @@ query: |
     where CaseID = {{case_id}}
 
 to:
-- 
-    name: Elsa Gunter
-    email: egunter@illinois.edu
+-
+    name: Eric Shaffer
+    email: shaffer1@illinois.edu
 
 cc:
+-
+    name: Elsa Gunter
+    email: egunter@illinois.edu
 - 
     name: Andreas Kloeckner
     email: andreask@illinois.edu
@@ -34,7 +37,7 @@ subject: |
 
 body: |
 
-    Dear Elsa,
+    Dear Eric,
 
     FAIR{{ CaseID }} has completed the appeals process.
     {% if Hearing_start == None -%}
