@@ -100,6 +100,8 @@ The rest of this document assumes you have read this.
 
 The committee must decide on the following points:
 
+-   **Grounds determination:** The committee must decide whether the student had grounds for appeal on the finding (if appealed) and/or the sanction. Grounds must *exclusively* be drawn from the list of four found in paragraph c of [§ 1-405][appealproc].
+
 -   **Overall ruling**:
 
     Following paragraph f.6 of [§ 1-405][appealproc], a committee must decide on *exactly* one of the following:
@@ -108,8 +110,6 @@ The committee must decide on the following points:
     2.  **Overturn** the instructor’s decision entirely (i.e. find that the student *did not commit*)
     3.  **Modify** the finding (eg facilitation instead of cheating, or maybe facilitation and cheating) and/or the sanction
     4.  Or, in the case of a procedural error that likely affected the instructor's arriving at the correct decision, to **roll the process back** to before the the procedural error occur.
-
--   **Grounds determination:** The committee must decide whether the student had grounds for appeal on the finding (if appealed) and/or the sanction. Grounds must *exclusively* be drawn from the list of four found in paragraph c of [§ 1-405][appealproc].
 
 -   **Justification:** Why did the committee arrive at the decision outlined above? What evidence was considered in doing so? This justification must be based on what is allowed by the student code. Personal preferences or ways in which the committee disagree with the instructor do not matter. Instructors have broad latitude to set course policies within the bounds of the code, and the appeals process may not impinge on this freedom.
 
