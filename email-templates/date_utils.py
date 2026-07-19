@@ -31,11 +31,11 @@ def advance_deadline(
         deadline = None
     else:
         min_bump = existing_days
-        deadline = datetime.datetime.fromtimestamp(old_deadline)  # noqa: DTZ006
+        deadline = datetime.datetime.fromtimestamp(old_deadline)  # ruff:ignore[call-datetime-fromtimestamp]
 
     min_deadline = datetime_by_adding_business_days(
         datetime.datetime.combine(
-            datetime.date.today(),  # noqa: DTZ011
+            datetime.date.today(),  # ruff:ignore[call-date-today]
             datetime.time(17, 0)),
         min_bump)
 
